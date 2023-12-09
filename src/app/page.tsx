@@ -1,7 +1,9 @@
+import { BetalistHero } from "@components/hero";
+
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      Welcome to Betalist
+    <main className="min-h-screen  bg-[#09090b] text-white">
+      <BetalistHero />
     </main>
   );
 }
