@@ -1,3 +1,4 @@
+import { verifyUser } from "@action";
 import NextAuth from "next-auth/next";
 import GoogleProvider from "next-auth/providers/google";
 
@@ -16,6 +17,10 @@ export const handler = NextAuth({
         token.image = user.image;
       }
       return token;
+    },
+    async signIn({ user }) {
+      await verifyUser(user?.email!);
+      return true;
     },
   },
   pages: {
