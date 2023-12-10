@@ -1,16 +1,23 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-export const LoginButton = () => {
+interface Props {
+  path?: string;
+}
+
+export const LoginButton = ({ path }: Props) => {
   const { data: session } = useSession();
 
   if (!session) {
     return (
       <button
         className="border px-4 py-2 rounded-md"
-        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+        onClick={() =>
+          signIn("google", {
+            callbackUrl: path ? `/dashboard/create?url=${path}` : "/dashboard",
+          })
+        }
       >
         Login with Google
       </button>
