@@ -1,28 +1,21 @@
-import { verifyUser } from "@action";
 import NextAuth from "next-auth/next";
-import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export const handler = NextAuth({
   providers: [
-    GoogleProvider({
-      clientId: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!,
-      clientSecret: process.env.NEXT_PUBLIC_GOOGLE_CLIENT_SECRET!,
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: {}, // leave empty because we have a dedicated sign-in page
+      },
+      async authorize(credentials) {
+        const user = { id: "42", email: "odii@gmail.com" };
+        const isAuthed = credentials?.email == user.email;
+        return isAuthed ? user : null;
+      },
     }),
   ],
 
-  callbacks: {
-    jwt({ token, user }) {
-      if (user) {
-        token.id = user.id;
-        token.image = user.image;
-      }
-      return token;
-    },
-    async signIn({ user }) {
-      await verifyUser(user?.email!);
-      return true;
-    },
-  },
   pages: {
     signIn: "/sign-in",
     error: "/not-found",
