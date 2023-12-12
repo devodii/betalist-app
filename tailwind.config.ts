@@ -75,6 +75,7 @@ module.exports = {
         "dark-yellow": "#F5BD1A",
         "mild-black": "#0f0f0f",
         neutral: "#d2cbc7",
+        "dark-secondary": "#1A1A17",
       },
       textColor: {
         "dark-green": "#2E4820",
