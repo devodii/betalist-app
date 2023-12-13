@@ -1,5 +1,5 @@
 "use client";
 
-import { Browser, ChartBar } from "@phosphor-icons/react";
+import { Browser } from "@phosphor-icons/react";
 
-export { Browser, ChartBar };
+export { Browser };

@@ -1,6 +1,12 @@
-import { Browser, ChartBar } from "@icons";
+"use client";
+
+import * as React from "react";
+import { useSearchParams } from "next/navigation";
+
+import { Browser } from "@icons";
 import { Button } from "@shadcn/button";
 import Link from "next/link";
+import { createWaitlist } from "@action";
 
 interface Menu {
   href: string;
@@ -13,11 +19,6 @@ const menu: Menu[] = [
     href: "/dashboard/create",
     icon: Browser,
     name: "Page",
-  },
-  {
-    href: "/dashboard/create/stats",
-    icon: ChartBar,
-    name: "Stats",
   },
 ];
 
@@ -33,6 +34,10 @@ function LinkComp(props: Menu) {
 }
 
 export function CreateHeader() {
+  const searchParams = useSearchParams();
+  const url = searchParams.get("url")!;
+  const isEmailSelected = Boolean(searchParams.get("email")!);
+
   return (
     <nav
       role="navigation"
@@ -43,7 +48,11 @@ export function CreateHeader() {
       ))}
 
       <div className="flex flex-1 items-end justify-end">
-        <Button className="self-end" variant={"secondary"}>
+        <Button
+          className="self-end"
+          variant={"secondary"}
+          onClick={() => createWaitlist(url, { email: isEmailSelected })}
+        >
           Deploy!
         </Button>
       </div>

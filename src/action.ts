@@ -1,20 +1,37 @@
 "use server";
 
-import supabase from "@lib/supabase";
+import { getServerSession } from "next-auth";
 
-async function createUser(email: string) {
-  const { data } = await supabase.from("users").insert({ email });
-  return data;
-}
+export async function createWaitlist(
+  name: string,
+  fields: Record<string, boolean>
+) {
+  const session = await getServerSession();
+  const email = session?.user?.email;
 
-export async function verifyUser(email: string) {
-  const { data } = await supabase
-    .from("users")
-    .select("email")
-    .match({ email }); // finds a user by email
+  const fieldNames = Object.keys(fields).filter(
+    (fieldName) => fields[fieldName]
+  );
 
-  // create a new user if not exists!
-  if (!data) {
-    await createUser(email);
-  }
+  const fieldColumns = fieldNames
+    .map((fieldName) => `${fieldName} VARCHAR(255)`)
+    .join(", ");
+
+  const query = `
+  CREATE TABLE ${name}_${email} (
+    id SERIAL PRIMARY KEY,
+    ${fieldColumns}
+  );
+`;
+
+  // TODO: Create table using the query
+
+  // Execute the query against Supabase
+  // const { data, error } = await supabase.query(query);
+
+  // if (error) {
+  //   console.error("Error creating table:", error);
+  // } else {
+  //   console.log("Table created successfully:", data);
+  // }
 }
