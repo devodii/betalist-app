@@ -1,12 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import * as React from "react";
 import { useSearchParams } from "next/navigation";
 
-import { Browser } from "@icons";
+import { createTable } from "@action";
 import { Button } from "@shadcn/button";
-import Link from "next/link";
-import { createWaitlist } from "@action";
+import { Browser, Spinner } from "@icons";
 
 interface Menu {
   href: string;
@@ -35,8 +35,12 @@ function LinkComp(props: Menu) {
 
 export function CreateHeader() {
   const searchParams = useSearchParams();
-  const url = searchParams.get("url")!;
-  const isEmailSelected = Boolean(searchParams.get("email")!);
+  const name = searchParams.get("url")!;
+
+  // TODO: Use later!
+  // const isEmailSelected = Boolean(searchParams.get("email")!);
+
+  const [isCreating, setIsCreating] = React.useState<boolean>(false);
 
   return (
     <nav
@@ -49,11 +53,19 @@ export function CreateHeader() {
 
       <div className="flex flex-1 items-end justify-end">
         <Button
-          className="self-end"
+          className="flex items-center gap-1 self-end "
           variant={"secondary"}
-          onClick={() => createWaitlist(url, { email: isEmailSelected })}
+          disabled={isCreating}
+          onClick={() => {
+            setIsCreating(true);
+            setTimeout(async () => {
+              await createTable(name);
+              setIsCreating(false);
+            }, 4000);
+          }}
         >
-          Deploy!
+          <span>Deploy!</span>
+          {isCreating && <Spinner size={24} className="animate-spin" />}
         </Button>
       </div>
     </nav>

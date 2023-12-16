@@ -1,37 +1,17 @@
 "use server";
 
+import supabase from "@lib/supabase";
 import { getServerSession } from "next-auth";
 
-export async function createWaitlist(
-  name: string,
-  fields: Record<string, boolean>
-) {
+export async function createTable(name: string) {
   const session = await getServerSession();
-  const email = session?.user?.email;
+  const { data, error } = await supabase.rpc("create_table", {
+    name: `${session?.user?.email?.slice(0, 6)}_${name}`,
+  });
 
-  const fieldNames = Object.keys(fields).filter(
-    (fieldName) => fields[fieldName]
-  );
+  if (error) {
+    console.error(error);
+  }
 
-  const fieldColumns = fieldNames
-    .map((fieldName) => `${fieldName} VARCHAR(255)`)
-    .join(", ");
-
-  const query = `
-  CREATE TABLE ${name}_${email} (
-    id SERIAL PRIMARY KEY,
-    ${fieldColumns}
-  );
-`;
-
-  // TODO: Create table using the query
-
-  // Execute the query against Supabase
-  // const { data, error } = await supabase.query(query);
-
-  // if (error) {
-  //   console.error("Error creating table:", error);
-  // } else {
-  //   console.log("Table created successfully:", data);
-  // }
+  return data;
 }

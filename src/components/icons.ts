@@ -1,5 +1,5 @@
 "use client";
 
-import { Browser } from "@phosphor-icons/react";
+import { Browser, Spinner } from "@phosphor-icons/react";
 
-export { Browser };
+export { Browser, Spinner };

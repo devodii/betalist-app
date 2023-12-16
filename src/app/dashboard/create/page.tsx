@@ -1,5 +1,4 @@
 import { FirstSteps } from "@components/first-steps";
-import { Button } from "@shadcn/button";
 
 interface Props {
   searchParams: {
