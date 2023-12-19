@@ -38,7 +38,10 @@ export function FirstSteps() {
 
   return (
     <Card className="bg-[#1A1A17] p-8 border-none flex flex-col gap-4 min-w-[600px]">
-      <form className="flex flex-col gap-6">
+      <form
+        className="flex flex-col gap-6"
+        onSubmit={(e) => e.preventDefault()}
+      >
         <div className="flex flex-col gap-2">
           <Label className="text-white lg:text-lg">Name | URL</Label>
           <Input

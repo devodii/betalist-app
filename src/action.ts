@@ -6,7 +6,7 @@ import { getServerSession } from "next-auth";
 export async function createTable(name: string) {
   const session = await getServerSession();
   const { data, error } = await supabase.rpc("create_table", {
-    name: `${session?.user?.email?.slice(0, 6)}_${name}`,
+    name: `${session?.user?.email}_${name}`,
   });
 
   if (error) {

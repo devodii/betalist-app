@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import * as React from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 
 import { createTable } from "@action";
 import { Button } from "@shadcn/button";
@@ -37,6 +37,8 @@ export function CreateHeader() {
   const searchParams = useSearchParams();
   const name = searchParams.get("url")!;
 
+  const { push } = useRouter();
+
   // TODO: Use later!
   // const isEmailSelected = Boolean(searchParams.get("email")!);
 
@@ -53,7 +55,7 @@ export function CreateHeader() {
 
       <div className="flex flex-1 items-end justify-end">
         <Button
-          className="flex items-center gap-1 self-end "
+          className="flex items-center gap-1 self-end"
           variant={"secondary"}
           disabled={isCreating}
           onClick={() => {
@@ -61,6 +63,7 @@ export function CreateHeader() {
             setTimeout(async () => {
               await createTable(name);
               setIsCreating(false);
+              push("/dashboard");
             }, 4000);
           }}
         >
