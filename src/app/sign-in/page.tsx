@@ -1,12 +1,13 @@
-import { LoginButton } from "@/components/login-button";
-import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { LoginComponent } from "@components/login-component";
 
 interface Props {
   searchParams: {
     path: string;
   };
 }
+
 export default async function SignInPage({ searchParams: { path } }: Props) {
   const user = await getServerSession();
 
@@ -14,5 +15,5 @@ export default async function SignInPage({ searchParams: { path } }: Props) {
     redirect(`/dashboard`);
   }
 
-  return <LoginButton path={path} />;
+  return <LoginComponent path={path} />;
 }

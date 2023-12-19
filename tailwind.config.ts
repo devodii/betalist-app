@@ -84,6 +84,7 @@ module.exports = {
         "mid-red": "#f17171",
       },
       borderColor: {
+        grayish: "#555555",
         "dark-main": "#212121",
         "main-yellow": "#F5BD1A",
       },

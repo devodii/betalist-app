@@ -4,7 +4,7 @@ import Link from "next/link";
 import * as React from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
-import { createTable } from "@action";
+import { createWaitlist } from "@action";
 import { Button } from "@shadcn/button";
 import { Browser, Spinner } from "@icons";
 
@@ -61,7 +61,7 @@ export function CreateHeader() {
           onClick={() => {
             setIsCreating(true);
             setTimeout(async () => {
-              await createTable(name);
+              await createWaitlist(name);
               setIsCreating(false);
               push("/dashboard");
             }, 4000);
