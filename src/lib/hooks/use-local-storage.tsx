@@ -30,6 +30,7 @@ export function useLocalStorage(key: string) {
     try {
       window.localStorage.getItem(key)
       setStoredValue(value)
+      return storedValue
     } catch (error) {
       logger(error, 'retrieve')
     }

@@ -1,28 +1,49 @@
-import { logError } from "@action";
-import { WaitList } from "@app/types";
-import supabase from "@lib/supabase";
+import { logError } from '@action'
+import supabase from '@lib/supabase'
+import { undoFormatUrl } from '@lib/utils'
 
-async function getInfo(table_name: string): Promise<WaitList[]> {
-  const { data, error } = await supabase.from(table_name).select("*");
+// Gets the table name from the general waitlists table based on the name of the wailist.
+async function getTableName(name: string) {
+  const { data, error } = (await supabase
+    .from('waitlists')
+    .select('*')
+    .eq('name', name)) as any
 
   if (error) {
-    logError(error);
+    logError(error, 'Invalid Table name')
   }
-  return data!;
+
+  return data.length ? data[0].table_name : null
+}
+
+async function getInfo(name: string) {
+  const table_name = await getTableName(name)
+  const { data, error } = await supabase.from(table_name).select('*')
+
+  if (error) {
+    logError(error)
+  }
+  return data!
 }
 
 interface Props {
   params: {
-    name: string;
-  };
+    name: string
+  }
 }
 
 export default async function ActivityPage({ params: { name } }: Props) {
-  const waiters = await getInfo(name);
+  const waiters = await getInfo(undoFormatUrl(name))
   return (
-    <main className="w-screen h-screen flex items-start justify-center">
-      {JSON.stringify(waiters)}
-      {name}
+    <main className="w-screen h-screen flex items-center justify-center">
+      <ul className="grid grid-cols-1">
+        Emails:
+        {waiters.map(waiter => (
+          <li key={waiter.id} className="list-none">
+            {waiter.email}
+          </li>
+        ))}
+      </ul>
     </main>
-  );
+  )
 }

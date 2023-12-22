@@ -1,25 +1,26 @@
-"use server";
+'use server'
 
-import supabase from "@lib/supabase";
-import { getServerSession } from "next-auth";
-import { PostgrestError } from "@supabase/supabase-js";
-import { IVerifyUser, WaitList } from "@app/types";
+import { IVerifyUser } from '@app/types'
+import supabase from '@lib/supabase'
+import { PostgrestError } from '@supabase/supabase-js'
+import { getServerSession } from 'next-auth'
 
 export async function logError(error: PostgrestError, msg?: string) {
-  console.error(msg ?? "An error occured: ", error);
+  console.error(`${msg ?? 'An error occured:'} `, error)
+  return error
 }
 
 export async function findId(email: string) {
   const { data, error } = await supabase
-    .from("account")
-    .select("id")
-    .eq("email", email);
+    .from('account')
+    .select('id')
+    .eq('email', email)
 
   if (error) {
-    logError(error);
+    logError(error)
   }
 
-  return data ? data[0]?.id : null;
+  return data ? data[0]?.id : null
 }
 
 export async function verifyUser(
@@ -27,46 +28,46 @@ export async function verifyUser(
   password: string
 ): Promise<IVerifyUser> {
   const { data: user, error } = await supabase
-    .from("account")
-    .select("*")
-    .eq("email", email);
+    .from('account')
+    .select('*')
+    .eq('email', email)
 
   if (error) {
-    console.error("Error fetching user:", error);
+    console.error('Error fetching user:', error)
   }
 
   return !user
-    ? { status: false, message: "user not found", user: null }
+    ? { status: false, message: 'user not found', user: null }
     : user[0].password === password
-    ? { message: "", status: true, user: user[0] }
-    : { status: false, message: "password is incorrect", user: null };
+      ? { message: '', status: true, user: user[0] }
+      : { status: false, message: 'password is incorrect', user: null }
 }
 
 export async function createTable(name: string) {
-  const { data, error } = await supabase.rpc("create_table", {
-    name,
-  });
+  const { data, error } = await supabase.rpc('create_table', {
+    name
+  })
 
   if (error) {
-    console.error(error);
+    console.error(error)
   }
 
-  return data;
+  return data
 }
 
 export async function createWaitlist(name: string) {
-  const session = await getServerSession();
-  const email = session?.user?.email;
-  const user_id = await findId(email!);
-  const table_name = `${session?.user?.email}_${name}`;
+  const session = await getServerSession()
+  const email = session?.user?.email
+  const user_id = await findId(email!)
+  const table_name = `${session?.user?.email}_${name}`
 
   const { data, error } = await supabase
-    .from("waitlists")
-    .insert({ name, user_id: user_id, table_name });
+    .from('waitlists')
+    .insert({ name, user_id: user_id, table_name })
 
   if (error) {
-    console.log(error);
+    console.log(error)
   }
 
-  await createTable(table_name);
+  await createTable(table_name)
 }

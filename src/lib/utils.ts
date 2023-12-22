@@ -6,5 +6,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export function formatUrl(url: string) {
-  return url.toLowerCase().replace(/\s+/g, '-')
+  return url.replace(/\s+/g, '-')
+}
+
+export function undoFormatUrl(url: string) {
+  return url.replaceAll('-', ' ')
 }
