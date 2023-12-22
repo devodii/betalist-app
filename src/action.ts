@@ -5,9 +5,12 @@ import supabase from '@lib/supabase'
 import { PostgrestError } from '@supabase/supabase-js'
 import { getServerSession } from 'next-auth'
 
-export async function logError(error: PostgrestError, msg?: string) {
-  console.error(`${msg ?? 'An error occured:'} `, error)
-  return error
+// TODO: Extend the parameters
+type Error = Parameters<(error: PostgrestError, msg?: string) => void>
+export async function logError(...args: Error) {
+  const message = args[1] ?? 'An error occured: '
+  console.error(message, args[0])
+  return message
 }
 
 export async function findId(email: string) {
@@ -71,3 +74,4 @@ export async function createWaitlist(name: string) {
 
   await createTable(table_name)
 }
+
