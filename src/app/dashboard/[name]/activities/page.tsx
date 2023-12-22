@@ -36,14 +36,18 @@ export default async function ActivityPage({ params: { name } }: Props) {
   const waiters = await getInfo(undoFormatUrl(name))
   return (
     <main className="w-screen h-screen flex items-center justify-center">
-      <ul className="grid grid-cols-1">
-        Emails:
-        {waiters.map(waiter => (
-          <li key={waiter.id} className="list-none">
-            {waiter.email}
-          </li>
-        ))}
-      </ul>
+      {waiters?.length > 0 ? (
+        <ul className="grid grid-cols-1">
+          Emails:
+          {waiters.map(waiter => (
+            <li key={waiter.id} className="list-none">
+              {waiter.email}
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <div>No waiter yet!</div>
+      )}
     </main>
   )
 }
