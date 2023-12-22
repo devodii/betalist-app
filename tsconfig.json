@@ -21,6 +21,7 @@
     "paths": {
       "@*": ["./src/*"],
       "@shadcn/*": ["./src/components/ui/*"],
+      "@hooks/*": ["./src/lib/hooks/*"],
       "@icons": ["./src/components/icons.ts"]
     }
   },

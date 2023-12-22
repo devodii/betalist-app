@@ -1,10 +1,27 @@
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 
-import { getUserWaitlists } from "@action";
+import { findId, logError } from "@action";
+import supabase from "@lib/supabase";
+
+import { WaitList } from "@app/types";
 import { NavBar } from "@components/navbar";
 import { WaitlistCard } from "@components/waitlist-card";
 import { LoginComponent } from "@components/login-component";
+
+export async function getUserWaitlists(email: string): Promise<WaitList[]> {
+  const user_id = await findId(email);
+  const { data, error } = await supabase
+    .from("waitlists")
+    .select("*")
+    .eq("user_id", user_id);
+
+  if (error) {
+    logError(error);
+  }
+
+  return data!;
+}
 
 export default async function DashboardPage() {
   const session = await getServerSession();
