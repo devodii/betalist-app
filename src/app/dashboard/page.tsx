@@ -1,13 +1,12 @@
-import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
 import { findId, logError } from "@action";
 import supabase from "@lib/supabase";
 
 import { WaitList } from "@app/types";
-import { NavBar } from "@components/navbar";
-import { WaitlistCard } from "@components/waitlist-card";
 import { LoginComponent } from "@components/login-component";
+import { WaitlistCard } from "@components/waitlist-card";
 
 export async function getUserWaitlists(email: string): Promise<WaitList[]> {
   const user_id = await findId(email);
@@ -34,10 +33,9 @@ export default async function DashboardPage() {
   const userlists = await getUserWaitlists(email);
 
   return (
-    <main className="overflow-x-hidden w-full ">
-      <NavBar />
-      <div className="ml-[300px] w-[calc(100%-300px)] max-w-7xl py-6 px-4">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+  
+    <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           {userlists?.length > 0 ? (
             userlists.map((d) => <WaitlistCard key={d.created_at} {...d} />)
           ) : (
@@ -45,8 +43,8 @@ export default async function DashboardPage() {
           )}
         </div>
         <div>This is a protected page for {email}</div>
-        <LoginComponent />
-      </div>
-    </main>
+      <LoginComponent />
+    </>
+  
   );
 }

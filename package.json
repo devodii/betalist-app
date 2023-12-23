@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "preview": "next build && next start",
-    "format:write": "prettier --write src\"{app,lib,components}/**/*.{ts,tsx,mdx}\" --cache",
-    "format:check": "prettier --check \"src/**/**/*.{ts,tsx,mdx}\" --cache"
+    "format:write": "prettier --write \"src/app/**/*.{ts,tsx,mdx}\"--cache",
+    "format:check": "prettier --check \"src/**/*.{ts,tsx,mdx}\" --cache"
   },
   "dependencies": {
     "@phosphor-icons/react": "^2.0.15",
@@ -42,4 +42,3 @@
     "typescript": "^5"
   }
 }
-

@@ -35,7 +35,7 @@ interface Props {
 export default async function ActivityPage({ params: { name } }: Props) {
   const waiters = await getInfo(undoFormatUrl(name))
   return (
-    <main className="w-screen h-screen flex items-center justify-center">
+    <div className="h-screen flex items-center justify-center">
       {waiters?.length > 0 ? (
         <ul className="grid grid-cols-1">
           Emails:
@@ -48,6 +48,6 @@ export default async function ActivityPage({ params: { name } }: Props) {
       ) : (
         <div>No waiter yet!</div>
       )}
-    </main>
+    </div>
   )
 }

@@ -1,9 +1,9 @@
-import { Button } from "@shadcn/button";
 import { Input } from "@shadcn/input";
 import { Label } from "@shadcn/label";
 
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
+import { Create } from "./create-button";
 
 const Title = () => (
   <h1 className="flex flex-wrap flex-col gap-2 lg:gap-4 opacity-80 text-4xl lg:text-[80px] font-extrabold select-none mt-4">
@@ -50,9 +50,8 @@ export const BetalistHero = () => {
             className="p-0 opacity-70 text-[18px] flex-1 bg-inherit border-none ocus:ring-0 focus-visible:ring-0 outline:none"
           />
         </div>
-        <Button className="p-4" type="submit">
-          create
-        </Button>
+        
+        <Create />
       </form>
     </div>
   );

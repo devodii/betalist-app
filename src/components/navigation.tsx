@@ -11,7 +11,9 @@ export function NavBar() {
           <span className="text-xl">Create</span>
         </Button>
       </NextLink>
-      <Button className="w-full text-xl py-6 mt-4">My waitlists</Button>
+      <NextLink href="/dashboard">
+        <Button className="w-full text-xl py-6 mt-4">My waitlists</Button>
+      </NextLink>
     </nav>
   )
 }
