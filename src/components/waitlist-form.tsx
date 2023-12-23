@@ -1,5 +1,6 @@
 'use client'
 
+import { insertIntoTable } from '@action'
 import { WaitList } from '@app/types'
 import {
   Card,
@@ -10,23 +11,25 @@ import {
 } from '@shadcn/card'
 import { Input } from '@shadcn/input'
 import { Label } from '@shadcn/label'
-import { Button } from './ui/button'
-import { getWaitlist, insertIntoTable } from '@action'
+import { useRouter } from 'next/navigation'
+import { Create } from './create-button'
 
 interface Props {
   waitlistInfo: WaitList
+  product_name?: string
 }
 
 export function WaitListForm(props: Props) {
+  const { push } = useRouter()
+
   async function create(formdata: FormData) {
-    console.log('submitting...')
     const username = formdata.get('username') as string
     const email = formdata.get('email') as string
 
-    console.log({ username, email })
     if (!email || !username) return
 
     await insertIntoTable(email, username, props.waitlistInfo?.name)
+    setTimeout(() => push(`/${props.product_name}/thank-you`, 2000))
   }
 
   return (
@@ -58,9 +61,7 @@ export function WaitListForm(props: Props) {
               />
             </div>
 
-            <Button variant="secondary" type="submit" className="self-end">
-              Submit
-            </Button>
+            <Create text="Submit" />
           </form>
         </CardContent>
       </CardHeader>

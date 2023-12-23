@@ -1,7 +1,6 @@
 'use server'
 
-import { IVerifyUser, WaitList, WaitListTable } from '@app/types'
-import { WaitListForm } from '@components/waitlist-form'
+import { IVerifyUser, WaitList } from '@app/types'
 import supabase from '@lib/supabase'
 import { PostgrestError } from '@supabase/supabase-js'
 import { getServerSession } from 'next-auth'
