@@ -1,6 +1,7 @@
 'use server'
 
-import { IVerifyUser } from '@app/types'
+import { IVerifyUser, WaitList, WaitListTable } from '@app/types'
+import { WaitListForm } from '@components/waitlist-form'
 import supabase from '@lib/supabase'
 import { PostgrestError } from '@supabase/supabase-js'
 import { getServerSession } from 'next-auth'
@@ -64,14 +65,51 @@ export async function createWaitlist(name: string) {
   const user_id = await findId(email!)
   const table_name = `${session?.user?.email}_${name}`
 
-  const { data, error } = await supabase
+  // creates a new waitlist in the general database
+  const { error } = await supabase
     .from('waitlists')
     .insert({ name, user_id: user_id, table_name })
 
-  if (error) {
-    console.log(error)
-  }
+  if (error) logError(error)
 
+  // creates a new table.
   await createTable(table_name)
+}
+
+export async function findTable(name: string) {
+  const { data, error } = await supabase.from(name).select('*')
+
+  if (error) logError(error)
+
+  return data
+}
+
+export async function getWaitlist(name: string) {
+  const { data, error } = await supabase
+    .from('waitlists')
+    .select('*')
+    .eq('name', name)
+
+  if (error) logError(error)
+
+  const waitlist_table_info: WaitList = data ? data[0] : null
+
+  const results: any = await findTable(waitlist_table_info?.table_name)
+
+  return { waitlist_table_info, results } // the individual waitlist that was created by supabase function
+}
+
+export async function insertIntoTable(
+  email: string,
+  username: string,
+  table_name: string
+) {
+  const { waitlist_table_info } = await getWaitlist(table_name)
+
+  const { error } = await supabase
+    .from(waitlist_table_info?.table_name)
+    .insert({ email, username })
+
+  if (error) logError(error)
 }
 

@@ -12,6 +12,7 @@ export interface IVerifyUser {
   user: Account | null
 }
 
+// the general waitlist table
 export interface WaitList {
   id: UUID
   name: string
@@ -19,3 +20,11 @@ export interface WaitList {
   created_at: string
   user_id: UUID
 }
+
+// the dynamic table for the waitlist
+export interface WaitListTable {
+  id: UUID
+  email: string
+  username: string
+}
+

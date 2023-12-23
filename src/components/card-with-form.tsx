@@ -16,9 +16,11 @@ import { Input } from '@components/ui/input'
 import { Spinner } from '@icons'
 import { Button, ButtonProps } from '@shadcn/button'
 import { Label } from '@shadcn/label'
+import { revalidatePath } from 'next/cache'
 
 type Fields = {
   email: boolean
+  name: boolean
 }
 
 interface CardWithFormProps {
@@ -27,7 +29,8 @@ interface CardWithFormProps {
 
 export function CardWithForm({ action }: CardWithFormProps) {
   const [fields, setFields] = React.useState<Fields>({
-    email: true
+    email: true,
+    name: true
   })
 
   const searchParams = useSearchParams()
@@ -44,8 +47,13 @@ export function CardWithForm({ action }: CardWithFormProps) {
   }
 
   function handleUpdateFields() {
-    setFields(prevFields => ({ ...prevFields, email: !prevFields.email }))
+    setFields(prevFields => ({
+      ...prevFields,
+      email: !prevFields.email,
+      name: !prevFields.name
+    }))
     !fields.email ? params.set('email', 'true') : params.delete('email')
+    !fields.name ? params.set('name', 'true') : params.delete('name')
     replace(`${pathname}?${params.toString()}`)
   }
 
@@ -58,7 +66,10 @@ export function CardWithForm({ action }: CardWithFormProps) {
         </CardDescription>
 
         <CardContent>
-          <form className="flex flex-col gap-6">
+          <form
+            className="flex flex-col gap-6"
+            onSubmit={e => e.preventDefault()}
+          >
             <div className="flex flex-col gap-2">
               <Label className="text-white lg:text-lg">Name | URL</Label>
               <Input
@@ -71,6 +82,17 @@ export function CardWithForm({ action }: CardWithFormProps) {
 
             <div className="flex flex-col gap-2">
               <Label className="text-white lg:text-lg">Fields</Label>
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="name"
+                  className="checked:bg-red-500 data-[state=checked]:bg-green-500"
+                  onClick={handleUpdateFields}
+                  defaultChecked
+                />
+                <Label htmlFor="name" className="text-white text-lg">
+                  Name
+                </Label>
+              </div>
               <div className="flex items-center space-x-2">
                 <Switch
                   id="email-address"
@@ -110,6 +132,7 @@ function Deploy(props: DeployProps) {
       props.action()
       setCreating(false)
       push('/dashboard')
+      revalidatePath('/')
     }, 4000)
   }
 

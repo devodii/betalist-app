@@ -29,29 +29,19 @@ export const LoginComponent = ({ path }: Props) => {
     refresh()
   }
 
-  if (!session) {
-    return (
-      <form
-        onSubmit={handleSubmit}
-        className="max-w-xl mx-auto flex min-h-screen justify-center items-center w-screen flex-col gap-4"
-      >
-        <Input
-          placeholder="johndoe@gmail.com"
-          className="text-black"
-          name="email"
-        />
-        <Input placeholder="password" className="text-black" name="password" />
-        <button className="border px-4 py-2 rounded-md">Login</button>
-      </form>
-    )
-  } else {
-    return (
-      <button
-        className="border px-4 py-2 rounded-md"
-        onClick={() => Auth.signOut()}
-      >
-        Sign Out
-      </button>
-    )
-  }
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className="max-w-xl mx-auto flex min-h-screen justify-center items-center w-screen flex-col gap-4"
+    >
+      <Input
+        placeholder="johndoe@gmail.com"
+        className="text-black"
+        name="email"
+      />
+      <Input placeholder="password" className="text-black" name="password" />
+      <button className="border px-4 py-2 rounded-md">Login</button>
+    </form>
+  )
 }
+

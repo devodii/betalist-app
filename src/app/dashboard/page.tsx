@@ -5,7 +5,7 @@ import { findId, logError } from '@action'
 import supabase from '@lib/supabase'
 
 import { WaitList } from '@app/types'
-import { LoginComponent } from '@components/login-component'
+import { LogoutButton } from '@components/logout-button'
 import { WaitlistCard } from '@components/waitlist-card'
 
 export async function getUserWaitlists(email: string): Promise<WaitList[]> {
@@ -42,7 +42,7 @@ export default async function DashboardPage() {
         )}
       </div>
       <div>This is a protected page for {email}</div>
-      <LoginComponent />
+      <LogoutButton />
     </>
   )
 }

@@ -1,9 +1,9 @@
-import { Input } from "@shadcn/input";
-import { Label } from "@shadcn/label";
+import { Input } from '@shadcn/input'
+import { Label } from '@shadcn/label'
 
-import { getServerSession } from "next-auth";
-import { redirect } from "next/navigation";
-import { Create } from "./create-button";
+import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
+import { Create } from '@components/create-button'
 
 const Title = () => (
   <h1 className="flex flex-wrap flex-col gap-2 lg:gap-4 opacity-80 text-4xl lg:text-[80px] font-extrabold select-none mt-4">
@@ -17,19 +17,19 @@ const Title = () => (
       </span>
     </span>
   </h1>
-);
+)
 
 export const BetalistHero = () => {
   async function create(formdata: FormData) {
-    "use server";
+    'use server'
 
-    const url = formdata.get("url");
-    if (!url) return;
+    const url = formdata.get('url')
+    if (!url) return
 
-    const session = await getServerSession();
-    const isAuthed = session?.user ? true : false;
+    const session = await getServerSession()
+    const isAuthed = session?.user ? true : false
 
-    redirect(isAuthed ? `/dashboard/create?url=${url}` : `sign-in?path=${url}`);
+    redirect(isAuthed ? `/dashboard/create?url=${url}` : `sign-in?path=${url}`)
   }
 
   return (
@@ -50,9 +50,10 @@ export const BetalistHero = () => {
             className="p-0 opacity-70 text-[18px] flex-1 bg-inherit border-none ocus:ring-0 focus-visible:ring-0 outline:none"
           />
         </div>
-        
-        <Create />
+
+        <Create text="Create" />
       </form>
     </div>
-  );
-};
+  )
+}
+
