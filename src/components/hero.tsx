@@ -1,9 +1,8 @@
 import { Input } from '@shadcn/input'
-import { Label } from '@shadcn/label'
 
+import { Create } from '@components/create-button'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
-import { Create } from '@components/create-button'
 
 const Title = () => (
   <h1 className="flex flex-wrap flex-col gap-2 lg:gap-4 opacity-80 text-4xl lg:text-[80px] font-extrabold select-none mt-4">
@@ -35,12 +34,15 @@ export const BetalistHero = () => {
   return (
     <div className="w-full flex flex-col gap-6 items-start">
       <Title />
-      <form className="w-full max-w-lg mt-8" action={create}>
-        <Label className="opacity-70 max-w-xl lg:text-lg font-normal leading-7 mt-20 sm:mt-0">
+
+      <div className="flex-1 max-w-xl mt-20 sm:mt-0">
+        <span className="opacity-70 lg:text-lg font-normal">
           Start managing your product demand more effectively. Enter the name of
           your product below to create a new waitlist.
-        </Label>
+        </span>
+      </div>
 
+      <form className="w-full max-w-lg mt-8" action={create}>
         <div className="border border-[#f5BDIA] flex items-center gap-2 bg-dark-main w-full py-2 px-4">
           <span className="opacity-70 text-[18px]">betali.st/</span>
           <Input

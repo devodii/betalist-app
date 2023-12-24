@@ -12,7 +12,7 @@ import {
 import { Input } from '@shadcn/input'
 import { Label } from '@shadcn/label'
 import { useRouter } from 'next/navigation'
-import { Create } from './create-button'
+import { Create } from '@components/create-button'
 
 interface Props {
   waitlistInfo: WaitList

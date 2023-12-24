@@ -41,7 +41,6 @@ export default async function DashboardPage() {
           <div>You do not have a list yet!</div>
         )}
       </div>
-      <div>This is a protected page for {email}</div>
       <LogoutButton />
     </>
   )

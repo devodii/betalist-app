@@ -1,19 +1,20 @@
-import { SessionProvider } from "@/components/auth-provider";
-import type { Metadata } from "next";
-import { getServerSession } from "next-auth";
-import "./globals.css";
+import { SessionProvider } from '@/components/auth-provider'
+import { HydrationOverlay } from '@components/hydration-provider'
+import type { Metadata } from 'next'
+import { getServerSession } from 'next-auth'
+import './globals.css'
 
 export const metadata: Metadata = {
-  title: "Beta list",
-  description: "🚀 Accelerating tool launches & beta testing for solopreneurs.",
-};
+  title: 'Beta list',
+  description: '🚀 Accelerating tool launches & beta testing for solopreneurs.'
+}
 
 export default async function RootLayout({
-  children,
+  children
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
-  const session = await getServerSession();
+  const session = await getServerSession()
   return (
     <html lang="en">
       <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,8 +29,11 @@ export default async function RootLayout({
         rel="stylesheet"
       />
       <body className="bg-dark-main text-white">
-        <SessionProvider session={session}>{children}</SessionProvider>
+        <SessionProvider session={session}>
+          <HydrationOverlay>{children}</HydrationOverlay>
+        </SessionProvider>
       </body>
     </html>
-  );
+  )
 }
+
