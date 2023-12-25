@@ -68,9 +68,10 @@ export async function createWaitlist(
   let error_occured = false
   let error_msg = ''
 
-  const [existing_table] = (await findTable(table_name)) as any
+  const existing_table = await findTable(table_name)
 
-  if (existing_table) {
+  if (existing_table?.length || existing_table) {
+    console.log({ existing_table })
     error_occured = true
     error_msg = 'Name in use'
     return { error_occured, error_msg }
