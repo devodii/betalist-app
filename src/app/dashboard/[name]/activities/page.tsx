@@ -1,6 +1,10 @@
 import { logError } from '@action'
 import supabase from '@lib/supabase'
 import { undoFormatUrl } from '@lib/utils'
+import { unstable_noStore as noStore } from 'next/cache'
+
+export const revalidate = 0
+export const fetchCache = 'force-no-store'
 
 // Gets the table name from the general waitlists table based on the name of the wailist.
 async function getTableName(name: string) {
@@ -9,20 +13,18 @@ async function getTableName(name: string) {
     .select('*')
     .eq('name', name)) as any
 
-  if (error) {
-    logError(error, 'Invalid Table name')
-  }
+  if (error) await logError(error, 'Invalid Table name')
 
   return data.length ? data[0].table_name : null
 }
 
 async function getInfo(name: string) {
+  noStore()
   const table_name = await getTableName(name)
   const { data, error } = await supabase.from(table_name).select('*')
 
-  if (error) {
-    logError(error)
-  }
+  if (error) await logError(error)
+
   return data!
 }
 
@@ -51,3 +53,4 @@ export default async function ActivityPage({ params: { name } }: Props) {
     </div>
   )
 }
+

@@ -8,9 +8,7 @@ import { getServerSession } from 'next-auth'
 // TODO: Extend the parameters
 type Error = Parameters<(error: PostgrestError, msg?: string) => void>
 export async function logError(...args: Error) {
-  const message = args[1] ?? 'An error occured: '
-  console.error(message, args[0])
-  return message
+  console.error(args[1] ?? 'An error occured', args[0])
 }
 
 export async function findId(email: string) {
@@ -20,7 +18,7 @@ export async function findId(email: string) {
     .eq('email', email)
 
   if (error) {
-    logError(error)
+    await logError(error, 'User not found')
   }
 
   return data ? data[0]?.id : null
@@ -51,30 +49,34 @@ export async function createTable(name: string) {
     name
   })
 
-  if (error) logError(error, 'Error creating table!')
+  if (error) await logError(error, 'Error creating table!')
 
-  return data
+  return { data, error }
 }
 
 export async function createWaitlist(email: string, name: string) {
   const user_id = await findId(email!)
   const table_name = `${email}_${name}`
 
+  // creates a new table.
+  const { error: table_creation_error } = await createTable(table_name)!
+
+  if (table_creation_error) return
+
   // creates a new waitlist in the general database
   const { error } = await supabase
     .from('waitlists')
     .insert({ name, user_id: user_id, table_name })
 
-  if (error) logError(error)
+  if (error) await logError(error)
 
-  // creates a new table.
-  await createTable(table_name)
+  return { table_creation_error, error }
 }
 
 export async function findTable(name: string) {
   const { data, error } = await supabase.from(name).select('*')
 
-  if (error) logError(error)
+  if (error) await logError(error)
 
   return data
 }
@@ -85,7 +87,7 @@ export async function getWaitlist(name: string) {
     .select('*')
     .eq('name', name)
 
-  if (error) logError(error)
+  if (error) await logError(error)
 
   const waitlist_table_info: WaitList = data ? data[0] : null
 
@@ -96,8 +98,8 @@ export async function getWaitlist(name: string) {
 
 export async function insertIntoTable(
   email: string,
-  username: string,
-  table_name: string
+  table_name: string,
+  username?: string
 ) {
   const { waitlist_table_info } = await getWaitlist(table_name)
 
@@ -105,6 +107,6 @@ export async function insertIntoTable(
     .from(waitlist_table_info?.table_name)
     .insert({ email, username })
 
-  if (error) logError(error)
+  if (error) await logError(error)
 }
 

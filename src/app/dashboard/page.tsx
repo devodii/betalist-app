@@ -15,9 +15,7 @@ export async function getUserWaitlists(email: string): Promise<WaitList[]> {
     .select('*')
     .eq('user_id', user_id)
 
-  if (error) {
-    logError(error)
-  }
+  if (error) await logError(error, 'Waitlist not found')
 
   return data!
 }

@@ -21,15 +21,16 @@ interface Props {
 
 export function WaitListForm(props: Props) {
   const { push } = useRouter()
+  const redirect_url = `/${props.product_name}/thank-you`
 
   async function create(formdata: FormData) {
-    const username = formdata.get('username') as string
+    // const username = formdata.get('username') as string
     const email = formdata.get('email') as string
 
-    if (!email || !username) return
+    if (!email) return
 
-    await insertIntoTable(email, username, props.waitlistInfo?.name)
-    setTimeout(() => push(`/${props.product_name}/thank-you`, 2000))
+    await insertIntoTable(email, props.waitlistInfo?.name)
+    setTimeout(() => push(redirect_url, 2000))
   }
 
   return (
@@ -43,14 +44,14 @@ export function WaitListForm(props: Props) {
 
         <CardContent>
           <form className="flex flex-col gap-6 -ml-5 mt-4" action={create}>
-            <div className="flex flex-col gap-2">
+            {/* <div className="flex flex-col gap-2">
               <Label className="text-white lg:text-lg">Your Name</Label>
               <Input
                 className="flex-1 bg-dark-main text-white text-[20px] font-medium"
                 placeholder="Emmanuel Odii"
                 name="username"
               />
-            </div>
+            </div> */}
 
             <div className="flex flex-col gap-2">
               <Label className="text-white lg:text-lg">Your Email</Label>

@@ -1,22 +1,20 @@
 'use client'
 
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import * as React from 'react'
-
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle
-} from '@/components/ui/card'
-import { Switch } from '@/components/ui/switch'
-import { Input } from '@components/ui/input'
-import { Spinner } from '@icons'
-import { Button, ButtonProps } from '@shadcn/button'
+} from '@shadcn/card'
+import { Switch } from '@shadcn/switch'
+import { createWaitlist } from '@action'
+import { Input } from '@shadcn/input'
 import { Label } from '@shadcn/label'
+import { Create } from '@components/create-button'
 import { revalidatePath } from 'next/cache'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import * as React from 'react'
 
 type Fields = {
   email: boolean
@@ -24,10 +22,11 @@ type Fields = {
 }
 
 interface CardWithFormProps {
-  action: () => void
+  email: string
+  url: string
 }
 
-export function CardWithForm({ action }: CardWithFormProps) {
+export function CardWithForm({ email, url }: CardWithFormProps) {
   const [fields, setFields] = React.useState<Fields>({
     email: true,
     name: true
@@ -39,7 +38,7 @@ export function CardWithForm({ action }: CardWithFormProps) {
   const path = searchParams.get('url')
 
   const pathname = usePathname()
-  const { replace } = useRouter()
+  const { replace, push } = useRouter()
 
   function handleUpdate(term: string) {
     term ? params.set('url', term) : params.delete('url')
@@ -57,6 +56,21 @@ export function CardWithForm({ action }: CardWithFormProps) {
     replace(`${pathname}?${params.toString()}`)
   }
 
+  async function create(formdata: FormData) {
+    const name = formdata.get('name')
+
+    if (!name) return
+
+    const create_waitlist = await createWaitlist(email, url)
+
+    if (!create_waitlist?.table_creation_error) {
+      alert('Sorry, An error occured')
+    } else {
+      push('/dashboard')
+      return revalidatePath('/dashboard')
+    }
+  }
+
   return (
     <Card className="bg-[#1A1A17] text-white opacity-90 p-8 border-none flex flex-col gap-4 w-full max-w-[550px]">
       <CardHeader>
@@ -66,10 +80,7 @@ export function CardWithForm({ action }: CardWithFormProps) {
         </CardDescription>
 
         <CardContent>
-          <form
-            className="flex flex-col gap-6"
-            onSubmit={e => e.preventDefault()}
-          >
+          <form className="flex flex-col gap-6" action={create}>
             <div className="flex flex-col gap-2">
               <Label className="text-white lg:text-lg">Name | URL</Label>
               <Input
@@ -77,6 +88,7 @@ export function CardWithForm({ action }: CardWithFormProps) {
                 defaultValue={path!}
                 onChange={e => handleUpdate(e.target.value)}
                 placeholder="Product name..."
+                name="name"
               />
             </div>
 
@@ -105,48 +117,12 @@ export function CardWithForm({ action }: CardWithFormProps) {
                 </Label>
               </div>
             </div>
+
+            <Create text="Create" />
           </form>
         </CardContent>
-        <CardFooter className="flex justify-between">
-          <Button variant="outline" className="text-black">
-            Cancel
-          </Button>
-          <Deploy action={action} />
-        </CardFooter>
       </CardHeader>
     </Card>
-  )
-}
-
-interface DeployProps extends ButtonProps {
-  action: () => void
-}
-
-function Deploy(props: DeployProps) {
-  const { push } = useRouter()
-  const [creating, setCreating] = React.useState<boolean>(false)
-
-  function create() {
-    setCreating(true)
-    setTimeout(() => {
-      props.action()
-      setCreating(false)
-      push('/dashboard')
-      revalidatePath('/')
-    }, 4000)
-  }
-
-  return (
-    <Button
-      className="flex items-center gap-1 p-4"
-      type="submit"
-      {...props}
-      aria-disabled={creating}
-      onClick={create}
-    >
-      <span>create</span>
-      {creating && <Spinner size={24} className="animate-spin" />}
-    </Button>
   )
 }
 
