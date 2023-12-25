@@ -51,18 +51,14 @@ export async function createTable(name: string) {
     name
   })
 
-  if (error) {
-    console.error(error)
-  }
+  if (error) logError(error, 'Error creating table!')
 
   return data
 }
 
-export async function createWaitlist(name: string) {
-  const session = await getServerSession()
-  const email = session?.user?.email
+export async function createWaitlist(email: string, name: string) {
   const user_id = await findId(email!)
-  const table_name = `${session?.user?.email}_${name}`
+  const table_name = `${email}_${name}`
 
   // creates a new waitlist in the general database
   const { error } = await supabase
