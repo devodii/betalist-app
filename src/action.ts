@@ -3,7 +3,6 @@
 import { IVerifyUser, WaitList } from '@app/types'
 import supabase from '@lib/supabase'
 import { PostgrestError } from '@supabase/supabase-js'
-import { getServerSession } from 'next-auth'
 
 // TODO: Extend the parameters
 type Error = Parameters<(error: PostgrestError, msg?: string) => void>
@@ -68,6 +67,14 @@ export async function createWaitlist(
 
   let error_occured = false
   let error_msg = ''
+
+  const [existing_table] = (await findTable(table_name)) as any
+
+  if (existing_table) {
+    error_occured = true
+    error_msg = 'Name in use'
+    return { error_occured, error_msg }
+  }
 
   // creates a new table.
   const { error: table_creation_error } = await createTable(table_name)!

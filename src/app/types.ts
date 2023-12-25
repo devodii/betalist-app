@@ -25,6 +25,5 @@ export interface WaitList {
 export interface WaitListTable {
   id: UUID
   email: string
-  username: string
 }
 
