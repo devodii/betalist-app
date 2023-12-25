@@ -61,10 +61,10 @@ export function CardWithForm({ email, url }: CardWithFormProps) {
 
     if (!name) return
 
-    const create_waitlist = await createWaitlist(email, url)
+    const { error_occured, error_msg } = await createWaitlist(email, url)
 
-    if (!create_waitlist?.table_creation_error) {
-      alert('Sorry, An error occured')
+    if (error_occured) {
+      alert(`Error: ${error_msg}`)
     } else {
       push('/dashboard')
       return revalidatePath('/dashboard')

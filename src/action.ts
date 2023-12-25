@@ -54,14 +54,29 @@ export async function createTable(name: string) {
   return { data, error }
 }
 
-export async function createWaitlist(email: string, name: string) {
+type CreateWaitListReturn = {
+  error_msg: string
+  error_occured: boolean
+}
+
+export async function createWaitlist(
+  email: string,
+  name: string
+): Promise<CreateWaitListReturn> {
   const user_id = await findId(email!)
   const table_name = `${email}_${name}`
+
+  let error_occured = false
+  let error_msg = ''
 
   // creates a new table.
   const { error: table_creation_error } = await createTable(table_name)!
 
-  if (table_creation_error) return
+  if (table_creation_error) {
+    error_occured = true
+    error_msg = table_creation_error.message as string
+    return { error_occured, error_msg }
+  }
 
   // creates a new waitlist in the general database
   const { error } = await supabase
@@ -70,7 +85,7 @@ export async function createWaitlist(email: string, name: string) {
 
   if (error) await logError(error)
 
-  return { table_creation_error, error }
+  return { error_occured, error_msg }
 }
 
 export async function findTable(name: string) {
