@@ -1,5 +1,4 @@
 ## Betalist
-<hr />
 
 An open source waitlist management system.
 <br />
@@ -13,4 +12,4 @@ for solopreneurs to gather beta users for any products they intend to launch in 
 - [Vercel](https://vercel.com) - Deployments
 
 
-Built with by [odii](https://twitter.com/devodii)
+Built with ❤️ by [odii](https://twitter.com/devodii_)
