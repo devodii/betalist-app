@@ -1,10 +1,10 @@
 import { WaitList } from '@app/types'
 import { formatUrl } from '@lib/utils'
-import { Card, CardContent, CardTitle } from '@shadcn/card'
+import { Card, CardContent, CardTitle } from '@ui/card'
 import NextLink from 'next/link'
 
 export function WaitlistCard(props: Pick<WaitList, 'name' | 'created_at'>) {
-  const url = `/dashboard/${formatUrl(props.name)}/activities`
+  const url = `/app.betalist.com/${formatUrl(props.name)}/activities`
 
   return (
     <NextLink href={url}>

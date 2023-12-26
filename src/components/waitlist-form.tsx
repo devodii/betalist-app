@@ -8,9 +8,9 @@ import {
   CardDescription,
   CardHeader,
   CardTitle
-} from '@shadcn/card'
-import { Input } from '@shadcn/input'
-import { Label } from '@shadcn/label'
+} from '@ui/card'
+import { Input } from '@ui/input'
+import { Label } from '@ui/label'
 import { useRouter } from 'next/navigation'
 import { Create } from '@components/create-button'
 

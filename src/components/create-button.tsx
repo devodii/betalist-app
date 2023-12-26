@@ -1,7 +1,7 @@
 'use client'
 
 import { useFormStatus } from 'react-dom'
-import { Button, ButtonProps } from '@shadcn/button'
+import { Button, ButtonProps } from '@ui/button'
 import { Spinner } from '@icons'
 
 interface Props extends ButtonProps {

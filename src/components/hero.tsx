@@ -1,4 +1,4 @@
-import { Input } from '@shadcn/input'
+import { Input } from '@ui/input'
 
 import { Create } from '@components/create-button'
 import { getServerSession } from 'next-auth'
@@ -28,7 +28,7 @@ export const BetalistHero = () => {
     const session = await getServerSession()
     const isAuthed = session?.user ? true : false
 
-    redirect(isAuthed ? `/dashboard/create?url=${url}` : `sign-in?path=${url}`)
+    redirect(isAuthed ? `/app.betalist.com/create?url=${url}` : `/app.betalist.com/sign-in?path=${url}`)
   }
 
   return (

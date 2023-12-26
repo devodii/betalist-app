@@ -7,7 +7,8 @@ interface Props {
   }
 }
 export default function WaitListNamePage({ params: { name } }: Props) {
-  const url = `/dashboard/${formatUrl(name)}/activities`
+  const url = `/app.betalist.com/${formatUrl(name)}/activities`
 
   return redirect(url)
 }
+

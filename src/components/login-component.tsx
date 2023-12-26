@@ -3,7 +3,7 @@
 import * as React from 'react'
 import * as Auth from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { Input } from '@shadcn/input'
+import { Input } from '@ui/input'
 
 interface Props {
   path?: string
@@ -23,7 +23,7 @@ export const LoginComponent = ({ path }: Props) => {
       email,
       password,
       redirect: false,
-      callbackUrl: path ? `/dashboard/create?url=${path}` : '/dashboard'
+      callbackUrl: path ? `/app.betalist.com/create?url=${path}` : '/app.betalist.com'
     })
 
     refresh()

@@ -6,7 +6,7 @@ export default async function LandingPage() {
   const session = await getServerSession()
 
   if (session || session!.user) {
-    redirect('/dashboard')
+    redirect('/app.betalist.com')
   }
 
   return (

@@ -1,7 +1,7 @@
 'use client'
 
 import * as Auth from 'next-auth/react'
-import { Button } from '@shadcn/button'
+import { Button } from '@ui/button'
 
 export function LogoutButton() {
   return (

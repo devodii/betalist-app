@@ -25,7 +25,7 @@ export default async function DashboardPage() {
   const email = session?.user?.email!
 
   if (!session || !session.user) {
-    redirect('/sign-in')
+    redirect('/app.betalist.com/sign-in')
   }
 
   const userlists = await getUserWaitlists(email)

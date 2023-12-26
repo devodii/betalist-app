@@ -19,7 +19,7 @@ export function SignUpComponent() {
       .insert({ email, password });
 
     if (data) {
-      push("/dashboard");
+      push("/app.betalist.com");
     }
   }
   return (

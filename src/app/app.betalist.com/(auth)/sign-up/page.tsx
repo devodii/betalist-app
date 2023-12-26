@@ -6,8 +6,9 @@ export default async function SignUpPage() {
   const user = await getServerSession()
 
   if (user?.user) {
-    redirect(`/dashboard`)
+    redirect(`/app.betalist.com`)
   }
 
   return <SignUpComponent />
 }
+

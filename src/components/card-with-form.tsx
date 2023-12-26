@@ -6,11 +6,11 @@ import {
   CardDescription,
   CardHeader,
   CardTitle
-} from '@shadcn/card'
-import { Switch } from '@shadcn/switch'
+} from '@ui/card'
+import { Switch } from '@ui/switch'
 import { createWaitlist } from '@action'
-import { Input } from '@shadcn/input'
-import { Label } from '@shadcn/label'
+import { Input } from '@ui/input'
+import { Label } from '@ui/label'
 import { Create } from '@components/create-button'
 import { revalidatePath } from 'next/cache'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
@@ -66,8 +66,8 @@ export function CardWithForm({ email, url }: CardWithFormProps) {
     if (error_occured) {
       alert(`Error: ${error_msg}`)
     } else {
-      push('/dashboard')
-      return revalidatePath('/dashboard')
+      push('/app.betalist.com')
+      return revalidatePath('/app.betalist.com')
     }
   }
 
