@@ -1,9 +1,9 @@
+import Link from 'next/link'
 import { logError } from '@action'
 import { WaitersList } from '@components/waiters'
 import supabase from '@lib/supabase'
 import { undoFormatUrl } from '@lib/utils'
 import { unstable_noStore as noStore } from 'next/cache'
-import Link from 'next/link'
 
 export const revalidate = 0
 
@@ -35,8 +35,9 @@ interface Props {
   }
 }
 
-export default async function AnalytucsPage({ searchParams }: Props) {
+export default async function AnalyticsPage({ searchParams }: Props) {
   const waiters = await getInfo(undoFormatUrl(searchParams.key))
+  const table_name = await getTableName(searchParams.key)
 
   const url = `http://localhost:3000/${searchParams.key}`
   return (
@@ -48,7 +49,7 @@ export default async function AnalytucsPage({ searchParams }: Props) {
         </Link>
       </div>
       {waiters?.length > 0 ? (
-        <WaitersList list={waiters} />
+        <WaitersList initial={waiters} table_name={table_name} />
       ) : (
         <div>No waiter yet!</div>
       )}

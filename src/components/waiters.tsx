@@ -5,12 +5,13 @@ import supabase from '@lib/supabase'
 import { WaitListTable } from '@app/types'
 import { RealtimePostgresInsertPayload } from '@supabase/supabase-js'
 
-type WaitersListProps = {
-  list: WaitListTable[]
+type Props = {
+  initial: WaitListTable[]
+  table_name: string
 }
 
-export function WaitersList(props: WaitersListProps) {
-  const [submissions, setSubmissions] = React.useState(props.list)
+export function WaitersList(props: Props) {
+  const [submissions, setSubmissions] = React.useState(props.initial)
 
   React.useEffect(() => {
     const channel = supabase
@@ -20,11 +21,9 @@ export function WaitersList(props: WaitersListProps) {
         {
           event: 'INSERT',
           schema: 'public',
-          table: 'emmanuel@gmail.com_DropBox'
+          table: props.table_name
         },
         (payload: RealtimePostgresInsertPayload<WaitListTable>) => {
-          console.log('received!')
-          console.log({ payload })
           setSubmissions([...submissions, payload.new])
         }
       )
@@ -33,7 +32,7 @@ export function WaitersList(props: WaitersListProps) {
     return () => {
       supabase.removeChannel(channel)
     }
-  }, [submissions, setSubmissions])
+  }, [submissions, setSubmissions, props.table_name])
 
   return (
     <ul className="grid grid-cols-1">
