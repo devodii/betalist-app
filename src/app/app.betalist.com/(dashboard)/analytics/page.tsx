@@ -1,11 +1,11 @@
-import Link from 'next/link'
 import { logError } from '@action'
+import { WaitersList } from '@components/waiters'
 import supabase from '@lib/supabase'
 import { undoFormatUrl } from '@lib/utils'
-import { WaitersList } from '@components/waiters'
 import { unstable_noStore as noStore } from 'next/cache'
+import Link from 'next/link'
 
-export const fetchCache = 'force-no-store'
+export const revalidate = 0
 
 // Gets the table name from the general waitlists table based on the name of the wailist.
 async function getTableName(name: string) {
