@@ -5,7 +5,7 @@ import { BetalistHero } from '@components/hero'
 export default async function LandingPage() {
   const session = await getServerSession()
 
-  if (session || session!.user) {
+  if (session || session!?.user) {
     redirect('/app.betalist.com')
   }
 

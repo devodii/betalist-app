@@ -1,7 +1,7 @@
 import { getWaitlist } from '@action'
 import { undoFormatUrl } from '@lib/utils'
 import { WaitListForm } from '@components/waitlist-form'
-import ThankYou from '@components/thank-you'
+import { ThankYou } from '@components/thank-you'
 
 interface Props {
   params: {
