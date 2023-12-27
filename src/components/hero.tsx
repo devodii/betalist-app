@@ -1,6 +1,6 @@
 import { Input } from '@ui/input'
 
-import { Create } from '@components/create-button'
+import { Submit } from '@components/submit-button'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 
@@ -28,7 +28,11 @@ export const BetalistHero = () => {
     const session = await getServerSession()
     const isAuthed = session?.user ? true : false
 
-    redirect(isAuthed ? `/app.betalist.com/create?url=${url}` : `/app.betalist.com/sign-in?path=${url}`)
+    redirect(
+      isAuthed
+        ? `/app.betalist.com/create?url=${url}`
+        : `/app.betalist.com/sign-in?path=${url}`
+    )
   }
 
   return (
@@ -53,7 +57,7 @@ export const BetalistHero = () => {
           />
         </div>
 
-        <Create text="Create" />
+        <Submit text="Create" />
       </form>
     </div>
   )

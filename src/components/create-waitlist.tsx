@@ -11,7 +11,7 @@ import { Switch } from '@ui/switch'
 import { createWaitlist } from '@action'
 import { Input } from '@ui/input'
 import { Label } from '@ui/label'
-import { Create } from '@components/create-button'
+import { Submit } from '@components/submit-button'
 import { revalidatePath } from 'next/cache'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
@@ -118,7 +118,7 @@ export function CardWithForm({ email, url }: CardWithFormProps) {
               </div>
             </div>
 
-            <Create text="Create" />
+            <Submit text="Create" />
           </form>
         </CardContent>
       </CardHeader>

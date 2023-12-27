@@ -8,7 +8,7 @@ interface Props extends ButtonProps {
   text: string
 }
 
-export function Create(props: Props) {
+export function Submit(props: Props) {
   const { pending } = useFormStatus()
 
   return (

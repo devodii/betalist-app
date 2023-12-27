@@ -12,7 +12,7 @@ import {
 import { Input } from '@ui/input'
 import { Label } from '@ui/label'
 import { useRouter } from 'next/navigation'
-import { Create } from '@components/create-button'
+import { Submit } from '@components/submit-button'
 
 interface Props {
   waitlistInfo: WaitList
@@ -21,10 +21,9 @@ interface Props {
 
 export function WaitListForm(props: Props) {
   const { push } = useRouter()
-  const redirect_url = `/${props.product_name}/thank-you`
+  const redirect_url = `/${props.product_name}?success=true`
 
   async function create(formdata: FormData) {
-    // const username = formdata.get('username') as string
     const email = formdata.get('email') as string
 
     if (!email) return
@@ -37,32 +36,20 @@ export function WaitListForm(props: Props) {
     <Card className="bg-[#1A1A17] text-white opacity-90 p-8 border-none flex flex-col gap-4 w-full max-w-[550px]">
       <CardHeader>
         <CardTitle>{props.waitlistInfo?.name}</CardTitle>
-        {/* TODO: Add dynamic description */}
         <CardDescription className="text-[16px]">
           The description for this product
         </CardDescription>
 
         <CardContent>
-          <form className="flex flex-col gap-6 -ml-5 mt-4" action={create}>
-            {/* <div className="flex flex-col gap-2">
-              <Label className="text-white lg:text-lg">Your Name</Label>
-              <Input
-                className="flex-1 bg-dark-main text-white text-[20px] font-medium"
-                placeholder="Emmanuel Odii"
-                name="username"
-              />
-            </div> */}
+          <form className="flex flex-col gap-2 -ml-5 mt-4" action={create}>
+            <Label className="text-white lg:text-lg">Your Email</Label>
+            <Input
+              className="flex-1 bg-dark-main text-white text-[20px] font-medium"
+              placeholder="emmanuelodii@gmail.com"
+              name="email"
+            />
 
-            <div className="flex flex-col gap-2">
-              <Label className="text-white lg:text-lg">Your Email</Label>
-              <Input
-                className="flex-1 bg-dark-main text-white text-[20px] font-medium"
-                placeholder="emmanuelodii@gmail.com"
-                name="email"
-              />
-            </div>
-
-            <Create text="Submit" />
+            <Submit text="Submit" />
           </form>
         </CardContent>
       </CardHeader>

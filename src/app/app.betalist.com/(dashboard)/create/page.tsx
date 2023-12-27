@@ -1,4 +1,4 @@
-import { CardWithForm } from '@components/card-with-form'
+import { CardWithForm } from '@components/create-waitlist'
 import { getServerSession } from 'next-auth'
 
 interface Props {
