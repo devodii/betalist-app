@@ -5,7 +5,7 @@ import { Button } from '@ui/button'
 export function NavBar() {
   return (
     <nav className="bg-dark-main z-10 fixed left-0 border-r border-grayish min-w-[300px] min-h-screen py-24 px-4">
-      <NextLink href="/app.betalist.com/create">
+      <NextLink href="/app.betalist.com?create=true&email=true">
         <Button className="flex items-center gap-2 w-full py-6">
           <Plus size={24} />
           <span className="text-xl">Create</span>

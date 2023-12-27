@@ -1,5 +1,6 @@
 'use client'
 
+import * as React from 'react'
 import {
   Card,
   CardContent,
@@ -7,29 +8,26 @@ import {
   CardHeader,
   CardTitle
 } from '@ui/card'
-import { Switch } from '@ui/switch'
 import { createWaitlist } from '@action'
+import { Switch } from '@ui/switch'
 import { Input } from '@ui/input'
 import { Label } from '@ui/label'
 import { Submit } from '@components/submit-button'
 import { revalidatePath } from 'next/cache'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import * as React from 'react'
 
 type Fields = {
   email: boolean
-  name: boolean
 }
 
-interface CardWithFormProps {
+interface CreateWaitListFormProps {
   email: string
   url: string
 }
 
-export function CardWithForm({ email, url }: CardWithFormProps) {
+export function CreateWaitListForm({ email, url }: CreateWaitListFormProps) {
   const [fields, setFields] = React.useState<Fields>({
-    email: true,
-    name: true
+    email: true
   })
 
   const searchParams = useSearchParams()
@@ -48,11 +46,9 @@ export function CardWithForm({ email, url }: CardWithFormProps) {
   function handleUpdateFields() {
     setFields(prevFields => ({
       ...prevFields,
-      email: !prevFields.email,
-      name: !prevFields.name
+      email: !prevFields.email
     }))
     !fields.email ? params.set('email', 'true') : params.delete('email')
-    !fields.name ? params.set('name', 'true') : params.delete('name')
     replace(`${pathname}?${params.toString()}`)
   }
 
@@ -94,17 +90,7 @@ export function CardWithForm({ email, url }: CardWithFormProps) {
 
             <div className="flex flex-col gap-2">
               <Label className="text-white lg:text-lg">Fields</Label>
-              <div className="flex items-center space-x-2">
-                <Switch
-                  id="name"
-                  className="checked:bg-red-500 data-[state=checked]:bg-green-500"
-                  onClick={handleUpdateFields}
-                  defaultChecked
-                />
-                <Label htmlFor="name" className="text-white text-lg">
-                  Name
-                </Label>
-              </div>
+
               <div className="flex items-center space-x-2">
                 <Switch
                   id="email-address"

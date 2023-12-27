@@ -30,7 +30,7 @@ export const BetalistHero = () => {
 
     redirect(
       isAuthed
-        ? `/app.betalist.com/create?url=${url}`
+        ? `/app.betalist.com?create=true&url=${url}`
         : `/app.betalist.com/sign-in?path=${url}`
     )
   }

@@ -7,6 +7,7 @@ import supabase from '@lib/supabase'
 import { WaitList } from '@app/types'
 import { LogoutButton } from '@components/logout-button'
 import { WaitlistCard } from '@components/waitlist-card'
+import { CreateWaitListForm } from '@components/create-waitlist'
 
 export async function getUserWaitlists(email: string): Promise<WaitList[]> {
   const user_id = await findId(email)
@@ -20,13 +21,23 @@ export async function getUserWaitlists(email: string): Promise<WaitList[]> {
   return data!
 }
 
-export default async function DashboardPage() {
+interface Props {
+  searchParams: {
+    create: boolean
+    url: string
+  }
+}
+
+export default async function DashboardPage({ searchParams }: Props) {
   const session = await getServerSession()
   const email = session?.user?.email!
 
   if (!session || !session.user) {
     redirect('/app.betalist.com/sign-in')
   }
+
+  if (searchParams.create)
+    return <CreateWaitListForm email={email} url={searchParams.url} />
 
   const userlists = await getUserWaitlists(email)
 
