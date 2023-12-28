@@ -133,3 +133,15 @@ export async function insertIntoTable(
   if (error) await logError(error)
 }
 
+export async function getUserWaitlists(email: string): Promise<WaitList[]> {
+  const user_id = await findId(email)
+  const { data, error } = await supabase
+    .from('waitlists')
+    .select('*')
+    .eq('user_id', user_id)
+
+  if (error) await logError(error, 'Waitlist not found')
+
+  return data!
+}
+

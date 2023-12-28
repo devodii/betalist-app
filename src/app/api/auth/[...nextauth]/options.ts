@@ -1,8 +1,8 @@
-import NextAuth from 'next-auth'
+import { type NextAuthOptions } from 'next-auth'
 import { verifyUser } from '@action'
 import CredentialsProvider from 'next-auth/providers/credentials'
 
-export const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   session: {
     strategy: 'jwt'
   },
@@ -28,7 +28,5 @@ export const handler = NextAuth({
     signIn: '/app.betalist.com/sign-in',
     error: '/not-found'
   }
-})
-
-export { handler as GET, handler as POST }
+}
 

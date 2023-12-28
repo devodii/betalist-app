@@ -1,25 +1,11 @@
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 
-import { findId, logError } from '@action'
-import supabase from '@lib/supabase'
+import { getUserWaitlists } from '@action'
 
-import { WaitList } from '@app/types'
+import { CreateWaitListForm } from '@components/create-waitlist'
 import { LogoutButton } from '@components/logout-button'
 import { WaitlistCard } from '@components/waitlist-card'
-import { CreateWaitListForm } from '@components/create-waitlist'
-
-export async function getUserWaitlists(email: string): Promise<WaitList[]> {
-  const user_id = await findId(email)
-  const { data, error } = await supabase
-    .from('waitlists')
-    .select('*')
-    .eq('user_id', user_id)
-
-  if (error) await logError(error, 'Waitlist not found')
-
-  return data!
-}
 
 interface Props {
   searchParams: {
