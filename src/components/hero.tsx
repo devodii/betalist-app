@@ -54,6 +54,7 @@ export const BetalistHero = () => {
             spellCheck="false"
             name="url"
             className="p-0 opacity-70 text-[18px] flex-1 bg-inherit border-none ocus:ring-0 focus-visible:ring-0 outline:none"
+            required
           />
         </div>
 

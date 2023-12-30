@@ -1,16 +1,19 @@
-import { redirect } from 'next/navigation'
-import { getServerSession } from 'next-auth'
+import { RedirectToDashboard } from '@components/dashboard-button'
 import { BetalistHero } from '@components/hero'
+import { getServerSession } from 'next-auth'
+import React from 'react'
 
 export default async function LandingPage() {
   const session = await getServerSession()
 
-  if (session || session!?.user) {
-    redirect('/app.betalist.com')
-  }
-
   return (
-    <main className="min-h-screen p-24">
+    <main className="min-h-screen p-6 lg:p-24">
+      {session?.user && (
+        <header className="w-full flex items-end justify-end">
+          <RedirectToDashboard />
+        </header>
+      )}
+
       <BetalistHero />
     </main>
   )

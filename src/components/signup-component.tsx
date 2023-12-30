@@ -1,44 +1,54 @@
-"use client";
+'use client'
 
-import supabase from "@lib/supabase";
-import * as React from "react";
-import { useRouter } from "next/navigation";
+import supabase from '@lib/supabase'
+import { Input } from '@ui/input'
+import { signIn } from 'next-auth/react'
+import * as React from 'react'
+import { Submit } from './submit-button'
 
 export function SignUpComponent() {
-  const { push } = useRouter();
-
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    const formdata = new FormData(e.currentTarget);
-    const email = formdata.get("email");
-    const password = formdata.get("password");
-    console.log({ email, password });
+    e.preventDefault()
+    console.log('submit')
+    const formdata = new FormData(e.currentTarget)
+    const email = formdata.get('email')
+    const password = formdata.get('password')
 
-    const { data, error } = await supabase
-      .from("account")
-      .insert({ email, password });
+    console.log({ email, password })
+    const { status } = await supabase
+      .from('account')
+      .insert({ email, password })
 
-    if (data) {
-      push("/app.betalist.com");
+    if (status === 201) {
+      await signIn('credentials', {
+        email,
+        password,
+        callbackUrl: '/app.betalist.com'
+      })
     }
   }
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="h-screen w-screen flex flex-col gap-4 items-center justify-center"
-    >
-      <input
-        placeholder="email"
-        name="email"
-        className="w-full max-w-4xl border text-black black bg-inherit"
-      />
-      <input
-        placeholder="password"
-        name="password"
-        className="w-full max-w-4xl border border-black bg-inherit"
-      />
+    <div className="max-w-4xl flex mx-auto min-h-screen justify-center items-center w-screen flex-col gap-4 md:gap-8">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col items-center gap-4 w-full"
+      >
+        <Input
+          placeholder="johndoe@gmail.com"
+          className="text-black"
+          name="email"
+          required
+        />
+        <Input
+          placeholder="password"
+          className="text-black"
+          name="password"
+          required
+        />
 
-      <button type="submit">submit</button>
-    </form>
-  );
+        <Submit text="Register" />
+      </form>
+    </div>
+  )
 }
+

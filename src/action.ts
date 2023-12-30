@@ -1,5 +1,6 @@
 'use server'
 
+import { greet } from '@app/app.betalist.com/(auth)/action'
 import { IVerifyUser, WaitList } from '@app/types'
 import supabase from '@lib/supabase'
 import { PostgrestError } from '@supabase/supabase-js'
@@ -31,6 +32,10 @@ export async function verifyUser(
     .from('account')
     .select('*')
     .eq('email', email)
+
+  if (user) {
+    await greet()
+  }
 
   if (error) {
     console.error('Error fetching user:', error)

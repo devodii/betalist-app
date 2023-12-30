@@ -1,16 +1,17 @@
 'use client'
 
-import * as React from 'react'
-import * as Auth from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { Submit } from '@components/submit-button'
 import { Input } from '@ui/input'
+import { signIn } from 'next-auth/react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import * as React from 'react'
 
 interface Props {
   path?: string
 }
 
 export const LoginComponent = ({ path }: Props) => {
-  const { data: session } = Auth.useSession()
   const { refresh } = useRouter()
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -19,29 +20,52 @@ export const LoginComponent = ({ path }: Props) => {
     const email = formdata.get('email')
     const password = formdata.get('password')
 
-    const response = await Auth.signIn('credentials', {
+    const response = await signIn('credentials', {
       email,
       password,
       redirect: false,
-      callbackUrl: path ? `/app.betalist.com/create?url=${path}` : '/app.betalist.com'
+      callbackUrl: path
+        ? `/app.betalist.com/create?url=${path}`
+        : '/app.betalist.com'
     })
+    if (response?.status === 401) {
+      alert('Invalid credentials')
+    }
 
     refresh()
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="max-w-xl mx-auto flex min-h-screen justify-center items-center w-screen flex-col gap-4"
-    >
-      <Input
-        placeholder="johndoe@gmail.com"
-        className="text-black"
-        name="email"
-      />
-      <Input placeholder="password" className="text-black" name="password" />
-      <button className="border px-4 py-2 rounded-md">Login</button>
-    </form>
+    <div className="max-w-4xl flex mx-auto min-h-screen justify-center items-center w-screen flex-col gap-4 md:gap-8">
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col items-center gap-4 w-full"
+      >
+        <Input
+          placeholder="johndoe@gmail.com"
+          className="text-black"
+          name="email"
+          required
+        />
+        <Input
+          placeholder="password"
+          className="text-black"
+          name="password"
+          required
+        />
+
+        <Submit text="Login" variant="secondary" />
+      </form>
+      <p className="flex items-center justify-center gap-1">
+        <span>don&apos;t have an account yet?</span>
+        <Link
+          href={'/app.betalist.com/sign-up'}
+          className="underline underline-offset-2"
+        >
+          signup
+        </Link>
+      </p>
+    </div>
   )
 }
 

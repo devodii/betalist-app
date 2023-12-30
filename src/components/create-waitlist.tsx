@@ -85,6 +85,7 @@ export function CreateWaitListForm({ email, url }: CreateWaitListFormProps) {
                 onChange={e => handleUpdate(e.target.value)}
                 placeholder="Product name..."
                 name="name"
+                required
               />
             </div>
 

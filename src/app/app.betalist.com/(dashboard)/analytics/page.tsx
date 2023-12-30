@@ -1,9 +1,9 @@
-import Link from 'next/link'
 import { logError } from '@action'
 import { WaitersList } from '@components/waiters'
 import supabase from '@lib/supabase'
 import { undoFormatUrl } from '@lib/utils'
 import { unstable_noStore as noStore } from 'next/cache'
+import Link from 'next/link'
 
 export const revalidate = 0
 
@@ -39,7 +39,7 @@ export default async function AnalyticsPage({ searchParams }: Props) {
   const waiters = await getInfo(undoFormatUrl(searchParams.key))
   const table_name = await getTableName(searchParams.key)
 
-  const url = `http://localhost:3000/${searchParams.key}`
+  const url = `${process.env.NEXT_PUBLIC_BETALIST_URL}/${searchParams.key}`
   return (
     <div className="h-screen flex flex-col gap-8 items-center justify-center">
       <div>
