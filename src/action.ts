@@ -58,6 +58,16 @@ export async function createTable(name: string) {
   return { data, error }
 }
 
+export async function deleteTable(name: string) {
+  const { data, error } = await supabase.rpc('delete-table', {
+    name
+  })
+
+  if (error) await logError(error, 'Error deleting table!')
+
+  return { data, error }
+}
+
 type CreateWaitListReturn = {
   error_msg: string
   error_occured: boolean
@@ -148,5 +158,13 @@ export async function getUserWaitlists(email: string): Promise<WaitList[]> {
   if (error) await logError(error, 'Waitlist not found')
 
   return data!
+}
+
+export async function removeFromGeneralWaitlist(name: string) {
+  const { error } = await supabase.from('waitlists').delete().eq('name', name)
+
+  if (error) {
+    await logError(error, 'Failed to delete!')
+  }
 }
 

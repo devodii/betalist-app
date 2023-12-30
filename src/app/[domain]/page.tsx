@@ -1,7 +1,8 @@
 import { getWaitlist } from '@action'
-import { undoFormatUrl } from '@lib/utils'
-import { WaitListForm } from '@components/waitlist-form'
 import { ThankYou } from '@components/thank-you'
+import { WaitListForm } from '@components/waitlist-form'
+import { undoFormatUrl } from '@lib/utils'
+import { notFound } from 'next/navigation'
 
 interface Props {
   params: {
@@ -23,7 +24,7 @@ export default async function WaitlistPage({ params, searchParams }: Props) {
       {res?.id ? (
         <WaitListForm waitlistInfo={res} product_name={params.domain} />
       ) : (
-        <div>Sorry! This page does not exist</div>
+        notFound()
       )}
     </main>
   )
