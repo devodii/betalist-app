@@ -59,7 +59,7 @@ export async function createTable(name: string) {
 }
 
 export async function deleteTable(name: string) {
-  const { data, error } = await supabase.rpc('public.delete_table', {
+  const { data, error } = await supabase.rpc('delete_table', {
     name
   })
 
