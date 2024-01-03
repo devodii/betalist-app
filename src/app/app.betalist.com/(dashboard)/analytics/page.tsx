@@ -11,6 +11,7 @@ import { unstable_noStore as noStore } from 'next/cache'
 import Link from 'next/link'
 import { DeleteDialog } from '@components/delete-product'
 import { redirect, notFound } from 'next/navigation'
+import { getServerSession } from 'next-auth'
 
 export const revalidate = 0
 
@@ -23,7 +24,7 @@ async function getTableName(name: string) {
 
   if (error) await logError(error, 'Invalid Table name')
 
-  return data.length ? data[0].table_name : null
+  return data?.length ? data[0].table_name : null
 }
 
 async function getInfo(name: string) {
@@ -58,11 +59,18 @@ export default async function AnalyticsPage({ searchParams }: Props) {
   const { waitlist_table_info: res } = await getWaitlist(
     undoFormatUrl(searchParams.key)
   )
+
+  // disallow users from viewing the stats of others waitlist.
+  const session = await getServerSession()
+  if (!table_name.startsWith(session?.user?.email!)) {
+    return notFound()
+  }
+
   return (
     <main className="h-screen flex flex-col gap-8 items-center justify-center">
       {res?.id ? (
         <div>
-          <div className="">
+          <div>
             <DeleteDialog onDelete={onDelete} />
           </div>
           <div>

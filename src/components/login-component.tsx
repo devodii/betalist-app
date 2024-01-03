@@ -57,7 +57,7 @@ export const LoginComponent = ({ path }: Props) => {
         <Submit text="Login" variant="secondary" />
       </form>
       <p className="flex items-center justify-center gap-1">
-        <span>don&apos;t have an account yet?</span>
+        <span>don&apos;t have an users yet?</span>
         <Link
           href={'/app.betalist.com/sign-up'}
           className="underline underline-offset-2"

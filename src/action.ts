@@ -13,7 +13,7 @@ export async function logError(...args: Error) {
 
 export async function findId(email: string) {
   const { data, error } = await supabase
-    .from('account')
+    .from('users')
     .select('id')
     .eq('email', email)
 
@@ -29,7 +29,7 @@ export async function verifyUser(
   password: string
 ): Promise<IVerifyUser> {
   const { data: user, error } = await supabase
-    .from('account')
+    .from('users')
     .select('*')
     .eq('email', email)
 
