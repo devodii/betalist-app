@@ -47,13 +47,13 @@ export const BetalistHero = () => {
       </div>
 
       <form className="w-full max-w-lg mt-8" action={create}>
-        <div className="border border-[#f5BDIA] flex items-center gap-2 bg-dark-main w-full py-2 px-4">
+        <div className="border border-[#f5BDIA] rounded-md flex items-center gap-2 bg-dark-main w-full py-2 px-4">
           <span className="opacity-70 text-[18px]">betali.st/</span>
-          <Input
+          <input
             autoComplete="off"
             spellCheck="false"
             name="url"
-            className="p-0 opacity-70 text-[18px] flex-1 bg-inherit border-none ocus:ring-0 focus-visible:ring-0 outline:none"
+            className="p-0 -ml-2 opacity-70 text-[18px] flex-1 bg-inherit border-none outline-none"
             required
           />
         </div>

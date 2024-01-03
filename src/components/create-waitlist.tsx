@@ -1,6 +1,7 @@
 'use client'
 
-import * as React from 'react'
+import { createWaitlist } from '@action'
+import { Submit } from '@components/submit-button'
 import {
   Card,
   CardContent,
@@ -8,13 +9,12 @@ import {
   CardHeader,
   CardTitle
 } from '@ui/card'
-import { createWaitlist } from '@action'
-import { Switch } from '@ui/switch'
 import { Input } from '@ui/input'
 import { Label } from '@ui/label'
-import { Submit } from '@components/submit-button'
+import { Switch } from '@ui/switch'
 import { revalidatePath } from 'next/cache'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import * as React from 'react'
 
 type Fields = {
   email: boolean

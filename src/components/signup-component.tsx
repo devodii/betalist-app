@@ -14,7 +14,6 @@ export function SignUpComponent() {
     const email = formdata.get('email')
     const password = formdata.get('password')
 
-    console.log({ email, password })
     const { status } = await supabase.from('users').insert({ email, password })
 
     if (status === 201) {

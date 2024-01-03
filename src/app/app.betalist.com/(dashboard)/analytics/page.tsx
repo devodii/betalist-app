@@ -4,14 +4,14 @@ import {
   logError,
   removeFromGeneralWaitlist
 } from '@action'
+import { DeleteDialog } from '@components/delete-waitlist'
 import { WaitersList } from '@components/waiters'
 import supabase from '@lib/supabase'
 import { undoFormatUrl } from '@lib/utils'
-import { unstable_noStore as noStore } from 'next/cache'
-import Link from 'next/link'
-import { DeleteDialog } from '@components/delete-product'
-import { redirect, notFound } from 'next/navigation'
 import { getServerSession } from 'next-auth'
+import { unstable_noStore as noStore } from 'next/cache'
+import { notFound, redirect } from 'next/navigation'
+import { DeleteDialogContainer, LiveWaitlistInfo } from './client'
 
 export const revalidate = 0
 
@@ -62,33 +62,34 @@ export default async function AnalyticsPage({ searchParams }: Props) {
 
   // disallow users from viewing the stats of others waitlist.
   const session = await getServerSession()
-  if (!table_name.startsWith(session?.user?.email!)) {
+  if (!table_name?.startsWith(session?.user?.email!) || !res?.id) {
     return notFound()
   }
 
   return (
     <main className="h-screen flex flex-col gap-8 items-center justify-center">
-      {res?.id ? (
-        <div>
-          <div>
+      {res?.id && (
+        <>
+          <DeleteDialogContainer>
             <DeleteDialog onDelete={onDelete} />
-          </div>
-          <div>
-            <span>Your Page is Live at </span>
-            <Link href={url} className="underline underline-2" target="_blank">
-              {url}
-            </Link>
-          </div>
-          <div>
+          </DeleteDialogContainer>
+
+          <LiveWaitlistInfo url={url} />
+
+          <section className="flex  max-w-sm">
             {waiters?.length > 0 ? (
               <WaitersList initial={waiters} table_name={table_name} />
             ) : (
-              <div>No waiter yet!</div>
+              <div className="flex flex-col gap-2 items-center">
+                <span>No waiter yet!</span>
+                <span className="text-center">
+                  💡: When someone waits for your product, their email will show
+                  up here.
+                </span>
+              </div>
             )}
-          </div>
-        </div>
-      ) : (
-        notFound()
+          </section>
+        </>
       )}
     </main>
   )

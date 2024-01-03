@@ -1,7 +1,6 @@
 import { RedirectToDashboard } from '@components/dashboard-button'
 import { BetalistHero } from '@components/hero'
 import { getServerSession } from 'next-auth'
-import React from 'react'
 
 export default async function LandingPage() {
   const session = await getServerSession()

@@ -2,6 +2,7 @@
 
 import { insertIntoTable } from '@action'
 import { WaitList } from '@app/types'
+import { Submit } from '@components/submit-button'
 import {
   Card,
   CardContent,
@@ -12,7 +13,6 @@ import {
 import { Input } from '@ui/input'
 import { Label } from '@ui/label'
 import { useRouter } from 'next/navigation'
-import { Submit } from '@components/submit-button'
 
 interface Props {
   waitlistInfo: WaitList

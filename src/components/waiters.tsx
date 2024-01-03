@@ -1,9 +1,9 @@
 'use client'
 
-import * as React from 'react'
-import supabase from '@lib/supabase'
 import { WaitListTable } from '@app/types'
+import supabase from '@lib/supabase'
 import { RealtimePostgresInsertPayload } from '@supabase/supabase-js'
+import * as React from 'react'
 
 type Props = {
   initial: WaitListTable[]
@@ -15,7 +15,7 @@ export function WaitersList(props: Props) {
 
   React.useEffect(() => {
     const channel = supabase
-      .channel('realtime chats')
+      .channel('realtime submissions')
       .on(
         'postgres_changes',
         {
@@ -35,7 +35,7 @@ export function WaitersList(props: Props) {
   }, [submissions, setSubmissions, props.table_name])
 
   return (
-    <ul className="grid grid-cols-1">
+    <ul className="grid grid-cols-1 gap-1">
       Waiters:
       {submissions.map(waiter => (
         <li key={waiter.id} className="list-none">

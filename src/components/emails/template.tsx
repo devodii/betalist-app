@@ -7,7 +7,7 @@ interface Props {
 export function EmailTemplate(props: Props) {
   return (
     <Heading as="h1" className="text-red-500">
-      Hey {props.name}, we want to speciallu welcome you.
+      Hey {props.name}, we want to specially welcome you.
     </Heading>
   )
 }
