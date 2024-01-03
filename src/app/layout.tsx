@@ -30,7 +30,7 @@ export default async function RootLayout({
       />
       <body className="bg-dark-main text-white">
         <SessionProvider session={session}>
-          <HydrationOverlay>{children}</HydrationOverlay>
+          <>{children}</>
         </SessionProvider>
       </body>
     </html>

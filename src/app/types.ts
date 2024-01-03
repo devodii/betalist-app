@@ -27,3 +27,10 @@ export interface WaitListTable {
   email: string
 }
 
+export interface Feedback {
+  id: UUID
+  text: string
+  created_at: string
+  sender_id: string
+}
+
