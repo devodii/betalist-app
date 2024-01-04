@@ -1,7 +1,7 @@
+import { LogoutButton } from '@auth/logout-button'
 import { Plus } from '@icons'
 import { Button } from '@ui/button'
 import NextLink from 'next/link'
-import { LogoutButton } from './logout-button'
 
 export function NavBar() {
   return (

@@ -1,6 +1,6 @@
-import { redirect } from 'next/navigation'
+import { SignInComponent } from '@auth/signin-component'
 import { getServerSession } from 'next-auth'
-import { LoginComponent } from '@components/login-component'
+import { redirect } from 'next/navigation'
 
 interface Props {
   searchParams: {
@@ -15,6 +15,6 @@ export default async function SignInPage({ searchParams: { path } }: Props) {
     redirect(`/app.betalist.com`)
   }
 
-  return <LoginComponent path={path} />
+  return <SignInComponent path={path} />
 }
 

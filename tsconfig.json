@@ -21,6 +21,7 @@
     "paths": {
       "@*": ["./src/*"],
       "@ui/*": ["./src/components/ui/*"],
+      "@auth/*": ["./src/app/app.betalist.com/(auth)/_components/*"],
       "@hooks/*": ["./src/lib/hooks/*"],
       "@icons": ["./src/components/icons.ts"]
     }
@@ -28,3 +29,4 @@
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules"]
 }
+

@@ -1,6 +1,6 @@
-import { redirect } from 'next/navigation'
+import { SignUpComponent } from '@auth/signup-component'
 import { getServerSession } from 'next-auth/next'
-import { SignUpComponent } from '@components/signup-component'
+import { redirect } from 'next/navigation'
 
 export default async function SignUpPage() {
   const user = await getServerSession()

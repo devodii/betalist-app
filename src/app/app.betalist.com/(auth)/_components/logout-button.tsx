@@ -1,13 +1,13 @@
 'use client'
 
-import * as Auth from 'next-auth/react'
 import { Button } from '@ui/button'
+import { signOut } from 'next-auth/react'
 
 export function LogoutButton() {
   return (
     <Button
       className="px-4 py-2 rounded-md w-full text-lg"
-      onClick={() => Auth.signOut()}
+      onClick={() => signOut()}
     >
       Sign out
     </Button>
