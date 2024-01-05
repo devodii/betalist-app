@@ -25,14 +25,14 @@ export const SignInComponent = ({ path }: Props) => {
         : '/app.betalist.com'
     })
     if (response?.status === 401) {
-      alert('Invalid credentials')
+      alert('Account not found, try sign up instead :)')
     }
 
     refresh()
   }
 
   return (
-    <Form action={handleSubmit}>
+    <Form action={handleSubmit} type="sign-in">
       <p className="flex items-center justify-center gap-1">
         <span>don&apos;t have an users yet?</span>
         <Link

@@ -5,6 +5,7 @@ import { Submit } from '@components/submit-button'
 interface Props {
   action: (formdata: FormData) => void
   children?: React.ReactNode
+  type: 'sign-in' | 'sign-up'
 }
 
 export function Form(props: Props) {
@@ -27,7 +28,10 @@ export function Form(props: Props) {
           required
         />
 
-        <Submit text="Login" variant="secondary" />
+        <Submit
+          text={props.type === 'sign-in' ? 'Login' : 'Register'}
+          variant="secondary"
+        />
       </form>
       {props?.children}
     </div>

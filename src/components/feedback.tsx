@@ -23,6 +23,7 @@ export function Feedback() {
     const text = formdata.get('message')
     const userId = await findId(session?.data?.user?.email!)
 
+    // TODO: Add page URL.
     const { error } = await supabase
       .from('feedbacks')
       .insert({ text, sender_id: userId })
@@ -56,7 +57,7 @@ export function Feedback() {
             <div className="flex flex-col gap-2">
               <span>Thank you for your feedback!</span>
               <Button onClick={() => setSubmitted(false)} variant={'secondary'}>
-                cancel
+                Send another one
               </Button>
             </div>
           )}

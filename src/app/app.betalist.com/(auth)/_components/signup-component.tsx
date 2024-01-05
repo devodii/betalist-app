@@ -19,6 +19,6 @@ export function SignUpComponent() {
       })
     }
   }
-  return <Form action={handleSubmit} />
+  return <Form action={handleSubmit} type="sign-up" />
 }
 
