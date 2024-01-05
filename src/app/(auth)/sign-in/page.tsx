@@ -1,4 +1,4 @@
-import { SignInComponent } from '@auth/signin-component'
+import { SignInComponent } from '@app/(auth)/_components/signin-component'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
 
@@ -12,7 +12,7 @@ export default async function SignInPage({ searchParams: { path } }: Props) {
   const user = await getServerSession()
 
   if (user?.user) {
-    redirect(`/app.betalist.com`)
+    redirect(`/dashboard`)
   }
 
   return <SignInComponent path={path} />

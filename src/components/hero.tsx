@@ -1,4 +1,3 @@
-
 import { Submit } from '@components/submit-button'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
@@ -29,8 +28,8 @@ export const BetalistHero = () => {
 
     redirect(
       isAuthed
-        ? `/app.betalist.com?create=true&url=${url}`
-        : `/app.betalist.com/sign-in?path=${url}`
+        ? `/dashboard/create?url=${url}&email=true`
+        : `/sign-in?path=${url}`
     )
   }
 

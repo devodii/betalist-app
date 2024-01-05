@@ -7,11 +7,7 @@ export const metadata: Metadata = {
   title: 'Dashboard | BetaList'
 }
 
-interface Props {
-  children: React.ReactNode
-}
-
-export default function DashboardLayout({ children }: Props) {
+export default function DashboardLayout(props: React.PropsWithChildren) {
   return (
     <main className="overflow-x-hidden w-full">
       <NavBar />
@@ -19,7 +15,7 @@ export default function DashboardLayout({ children }: Props) {
         <Feedback />
       </header>
       <div className="ml-[300px] w-[calc(100%-300px)] max-w-7xl py-6 px-4">
-        <>{children}</>
+        <>{props.children}</>
       </div>
     </main>
   )

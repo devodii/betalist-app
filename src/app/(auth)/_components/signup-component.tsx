@@ -1,6 +1,6 @@
 'use client'
 
-import { Form } from '@auth/form'
+import { Form } from '@app/(auth)/_components/form'
 import supabase from '@lib/supabase'
 import { signIn } from 'next-auth/react'
 
@@ -15,7 +15,7 @@ export function SignUpComponent() {
       await signIn('credentials', {
         email,
         password,
-        callbackUrl: '/app.betalist.com'
+        callbackUrl: '/dashboard'
       })
     }
   }

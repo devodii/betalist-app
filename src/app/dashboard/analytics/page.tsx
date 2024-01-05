@@ -53,7 +53,7 @@ export default async function AnalyticsPage({ searchParams }: Props) {
     'use server'
     await removeFromGeneralWaitlist(searchParams.key)
     await deleteTable(table_name)
-    redirect('/app.betalist.com')
+    redirect('/dashboard')
   }
 
   const { waitlist_table_info: res } = await getWaitlist(

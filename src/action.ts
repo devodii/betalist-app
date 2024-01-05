@@ -1,6 +1,6 @@
 'use server'
 
-import { greet } from '@app/app.betalist.com/(auth)/action'
+import { greet } from '@app/(auth)/action'
 import { IVerifyUser, WaitList } from '@app/types'
 import supabase from '@lib/supabase'
 import { PostgrestError } from '@supabase/supabase-js'

@@ -25,7 +25,7 @@ export const authOptions: NextAuthOptions = {
   ],
 
   pages: {
-    signIn: '/app.betalist.com/sign-in',
+    signIn: '/sign-in',
     error: '/not-found'
   }
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { Form } from '@auth/form'
+import { Form } from '@app/(auth)/_components/form'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -20,9 +20,7 @@ export const SignInComponent = ({ path }: Props) => {
       email,
       password,
       redirect: false,
-      callbackUrl: path
-        ? `/app.betalist.com/create?url=${path}`
-        : '/app.betalist.com'
+      callbackUrl: path ? `/dashboard/create?url=${path}` : '/dashboard'
     })
     if (response?.status === 401) {
       alert('Account not found, try sign up instead :)')
@@ -36,7 +34,7 @@ export const SignInComponent = ({ path }: Props) => {
       <p className="flex items-center justify-center gap-1">
         <span>don&apos;t have an users yet?</span>
         <Link
-          href={'/app.betalist.com/sign-up'}
+          href={'/dashboard/sign-up'}
           className="underline underline-offset-2"
         >
           signup

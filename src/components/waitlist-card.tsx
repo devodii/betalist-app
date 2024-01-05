@@ -4,7 +4,7 @@ import { formatUrl } from '@lib/utils'
 import { Card, CardContent, CardTitle } from '@ui/card'
 
 export function WaitlistCard(props: Pick<WaitList, 'name' | 'created_at'>) {
-  const url = `/app.betalist.com/analytics?key=${formatUrl(props.name)}`
+  const url = `/dashboard/analytics?key=${formatUrl(props.name)}`
 
   return (
     <NextLink href={url}>

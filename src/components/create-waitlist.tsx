@@ -62,8 +62,8 @@ export function CreateWaitListForm({ email, url }: CreateWaitListFormProps) {
     if (error_occured) {
       alert(`Error: ${error_msg}`)
     } else {
-      push('/app.betalist.com')
-      return revalidatePath('/app.betalist.com')
+      revalidatePath('/dashboard')
+      return push('/dashboard')
     }
   }
 
