@@ -47,6 +47,7 @@ export function WaitListForm(props: Props) {
               className="flex-1 bg-dark-main text-white text-[20px] font-medium"
               placeholder="emmanuelodii@gmail.com"
               name="email"
+              required
             />
 
             <Submit text="Submit" />
