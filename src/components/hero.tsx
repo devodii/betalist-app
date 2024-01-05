@@ -1,4 +1,3 @@
-import { Input } from '@ui/input'
 
 import { Submit } from '@components/submit-button'
 import { getServerSession } from 'next-auth'

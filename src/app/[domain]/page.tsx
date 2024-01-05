@@ -9,7 +9,7 @@ interface Props {
     domain: string
   }
   searchParams: {
-    success: true
+    success: 'true'
   }
 }
 
@@ -19,15 +19,12 @@ export default async function WaitlistPage({ params, searchParams }: Props) {
 
   if (!waitlist?.id) return notFound()
 
-  if (searchParams.success) return <ThankYou domain={params.domain} />
-
-  await new Promise((resolve, reject) => setTimeout(() => resolve(''), 4000))
+  if (searchParams.success === 'true')
+    return <ThankYou domain={params.domain} />
 
   return (
     <main className="w-screen h-screen flex flex-col items-center justify-center">
-      {waitlist?.id && (
-        <WaitListForm waitlistInfo={waitlist} product_name={params.domain} />
-      )}
+      <WaitListForm waitlistInfo={waitlist} product_name={params.domain} />
     </main>
   )
 }
