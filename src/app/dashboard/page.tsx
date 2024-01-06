@@ -8,7 +8,7 @@ export default async function DashboardPage() {
   const email = session?.user?.email!
 
   if (!session || !session.user) {
-    redirect('/dashboard/sign-in')
+    redirect('/sign-in')
   }
 
   const userlists = await getUserWaitlists(email)
@@ -16,7 +16,7 @@ export default async function DashboardPage() {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
       {userlists?.length > 0 ? (
-        userlists.map(d => <WaitlistCard key={d.created_at} {...d} />)
+        userlists.map(list => <WaitlistCard key={list.created_at} {...list} />)
       ) : (
         <div className="h-[90vh] w-[75vw] flex flex-col items-center justify-center">
           <span>You do not have a list yet!</span>
