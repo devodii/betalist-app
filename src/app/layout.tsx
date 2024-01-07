@@ -3,6 +3,7 @@ import { HydrationOverlay } from '@components/hydration-provider'
 import type { Metadata } from 'next'
 import { getServerSession } from 'next-auth'
 import './globals.css'
+import { Toaster } from '@/components/ui/toaster'
 
 export const metadata: Metadata = {
   title: 'Beta list',
@@ -31,6 +32,7 @@ export default async function RootLayout({
       <body className="bg-dark-main text-white">
         <SessionProvider session={session}>
           <>{children}</>
+          <Toaster />
         </SessionProvider>
       </body>
     </html>

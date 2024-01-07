@@ -1,6 +1,5 @@
 'use client'
 
-import { createWaitlist } from '@action'
 import { Submit } from '@components/submit-button'
 import {
   Card,
@@ -12,7 +11,6 @@ import {
 import { Input } from '@ui/input'
 import { Label } from '@ui/label'
 import { Switch } from '@ui/switch'
-import { revalidatePath } from 'next/cache'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
 
@@ -20,12 +18,11 @@ type Fields = {
   email: boolean
 }
 
-interface CreateWaitListFormProps {
-  email: string
-  url: string
+interface Props {
+  action: (formdata: FormData) => void
 }
 
-export function CreateWaitListForm({ email, url }: CreateWaitListFormProps) {
+export function CreateWaitListForm(props: Props) {
   const [fields, setFields] = React.useState<Fields>({
     email: true
   })
@@ -52,21 +49,6 @@ export function CreateWaitListForm({ email, url }: CreateWaitListFormProps) {
     replace(`${pathname}?${params.toString()}`)
   }
 
-  async function create(formdata: FormData) {
-    const name = formdata.get('name')
-
-    if (!name) return
-
-    const { error_occured, error_msg } = await createWaitlist(email, url)
-
-    if (error_occured) {
-      alert(`Error: ${error_msg}`)
-    } else {
-      revalidatePath('/dashboard')
-      return push('/dashboard')
-    }
-  }
-
   return (
     <Card className="bg-[#1A1A17] text-white opacity-90 p-8 border-none flex flex-col gap-4 w-full max-w-[550px]">
       <CardHeader>
@@ -76,7 +58,7 @@ export function CreateWaitListForm({ email, url }: CreateWaitListFormProps) {
         </CardDescription>
 
         <CardContent>
-          <form className="flex flex-col gap-6" action={create}>
+          <form className="flex flex-col gap-6" action={props.action}>
             <div className="flex flex-col gap-2">
               <Label className="text-white lg:text-lg">Name | URL</Label>
               <Input
