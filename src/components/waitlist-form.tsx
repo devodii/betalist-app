@@ -13,6 +13,7 @@ import {
 import { Input } from '@ui/input'
 import { Label } from '@ui/label'
 import { useRouter } from 'next/navigation'
+import { Spoiler } from './spoiler'
 
 interface Props {
   waitlistInfo: WaitList
@@ -33,29 +34,33 @@ export function WaitListForm(props: Props) {
   }
 
   return (
-    <Card className="bg-[#1A1A17] text-white opacity-90 p-8 border-none flex flex-col gap-4 w-full max-w-[550px]">
-      <CardHeader>
-        <CardTitle>{props.waitlistInfo?.name}</CardTitle>
-        {/* TODO: Allow users to add description when creating a waitlist */}
-        {/* <CardDescription className="text-[16px]">
+    <div className="w-full flex flex-col gap-4 items-center justify-center">
+      <Card className="bg-[#1A1A17] text-white opacity-90 p-8 border-none flex flex-col gap-4 w-full max-w-[550px]">
+        <CardHeader>
+          <CardTitle>{props.waitlistInfo?.name}</CardTitle>
+          {/* TODO: Allow users to add description when creating a waitlist */}
+          {/* <CardDescription className="text-[16px]">
           The description for this product
         </CardDescription> */}
 
-        <CardContent>
-          <form className="flex flex-col gap-2 -ml-5 mt-4" action={create}>
-            <Label className="text-white lg:text-lg">Your Email</Label>
-            <Input
-              className="flex-1 bg-dark-main text-white text-[20px] font-medium"
-              placeholder="emmanuelodii@gmail.com"
-              name="email"
-              required
-            />
+          <CardContent>
+            <form className="flex flex-col gap-2 -ml-5 mt-4" action={create}>
+              <Label className="text-white lg:text-lg">Your Email</Label>
+              <Input
+                className="flex-1 bg-dark-main text-white text-[20px] font-medium"
+                placeholder="emmanuelodii@gmail.com"
+                name="email"
+                required
+              />
 
-            <Submit text="Submit" />
-          </form>
-        </CardContent>
-      </CardHeader>
-    </Card>
+              <Submit text="Submit" />
+            </form>
+          </CardContent>
+        </CardHeader>
+      </Card>
+
+      <Spoiler />
+    </div>
   )
 }
 

@@ -1,0 +1,1 @@
+export const __rootDomain__ = process.env.NEXT_PUBLIC_BETALIST_URL

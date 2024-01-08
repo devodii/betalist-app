@@ -12,6 +12,7 @@ import { getServerSession } from 'next-auth'
 import { unstable_noStore as noStore } from 'next/cache'
 import { notFound, redirect } from 'next/navigation'
 import { DeleteDialogContainer, LiveWaitlistInfo } from './client'
+import { __rootDomain__ } from '@lib/constants'
 
 export const revalidate = 0
 
@@ -47,7 +48,7 @@ export default async function AnalyticsPage({ searchParams }: Props) {
   const waiters = await getInfo(undoFormatUrl(searchParams.key))
   const table_name = await getTableName(searchParams.key)
 
-  const url = `${process.env.NEXT_PUBLIC_BETALIST_URL}/${searchParams.key}`
+  const url = `${__rootDomain__}/${searchParams.key}`
 
   async function onDelete() {
     'use server'
