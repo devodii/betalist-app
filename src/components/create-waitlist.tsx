@@ -13,18 +13,27 @@ import { Label } from '@ui/label'
 import { Switch } from '@ui/switch'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
+import { CreateWaitlistError } from './create-waitlist-error'
 
 type Fields = {
   email: boolean
 }
+type Error = {
+  message: string
+  render: boolean
+}
 
 interface Props {
-  action: (formdata: FormData) => void
+  action: (formdata: FormData) => Promise<string | null | void>
 }
 
 export function CreateWaitListForm(props: Props) {
   const [fields, setFields] = React.useState<Fields>({
     email: true
+  })
+  const [error, setError] = React.useState<Error>({
+    message: '',
+    render: false
   })
 
   const searchParams = useSearchParams()
@@ -49,6 +58,19 @@ export function CreateWaitListForm(props: Props) {
     replace(`${pathname}?${params.toString()}`)
   }
 
+  // todo: refactor
+  async function mainAction(formdata: FormData) {
+    const message = await props.action(formdata)
+
+    if (error) {
+      setError(prev => ({
+        message: message as string,
+        render: !prev.render // toggles the re-render prop passed to the error component.
+      }))
+    }
+
+    console.log(error.render)
+  }
   return (
     <Card className="bg-[#1A1A17] text-white opacity-90 p-8 border-none flex flex-col gap-4 w-full max-w-[550px]">
       <CardHeader>
@@ -58,7 +80,7 @@ export function CreateWaitListForm(props: Props) {
         </CardDescription>
 
         <CardContent>
-          <form className="flex flex-col gap-6" action={props.action}>
+          <form className="flex flex-col gap-6" action={mainAction}>
             <div className="flex flex-col gap-2">
               <Label className="text-white lg:text-lg">Name | URL</Label>
               <Input
@@ -89,6 +111,11 @@ export function CreateWaitListForm(props: Props) {
 
             <Submit text="Create" />
           </form>
+
+          <CreateWaitlistError
+            description={error.message}
+            render={error.render}
+          />
         </CardContent>
       </CardHeader>
     </Card>

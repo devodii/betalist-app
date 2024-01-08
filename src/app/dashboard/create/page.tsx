@@ -1,6 +1,5 @@
 import { createWaitlist } from '@action'
 import { CreateWaitListForm } from '@components/create-waitlist'
-import { Error } from '@components/error'
 import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
@@ -11,15 +10,13 @@ interface Props {
   }
 }
 
-// Todo: Add error message
 export default async function CreatePage({ searchParams }: Props) {
   const session = await getServerSession()
-
-  // let error_message = ''
 
   async function create(formdata: FormData) {
     'use server'
     const name = formdata.get('name')
+    let error_message: string | null = null
 
     if (!name) return
 
@@ -29,19 +26,16 @@ export default async function CreatePage({ searchParams }: Props) {
     )
 
     if (error_occured) {
-      // error_message = error_msg
+      error_message = error_msg
       console.log(`Error: ${error_msg}`)
     } else {
       revalidatePath('/dashboard')
       redirect('/dashboard')
     }
+
+    return error_message ?? null
   }
 
-  return (
-    <>
-      <CreateWaitListForm action={create} />
-      {/* {error_message! && <Error description={error_message}>Show</Error>} */}
-    </>
-  )
+  return <CreateWaitListForm action={create} />
 }
 
