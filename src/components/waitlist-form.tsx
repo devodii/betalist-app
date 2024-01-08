@@ -36,9 +36,10 @@ export function WaitListForm(props: Props) {
     <Card className="bg-[#1A1A17] text-white opacity-90 p-8 border-none flex flex-col gap-4 w-full max-w-[550px]">
       <CardHeader>
         <CardTitle>{props.waitlistInfo?.name}</CardTitle>
-        <CardDescription className="text-[16px]">
+        {/* TODO: Allow users to add description when creating a waitlist */}
+        {/* <CardDescription className="text-[16px]">
           The description for this product
-        </CardDescription>
+        </CardDescription> */}
 
         <CardContent>
           <form className="flex flex-col gap-2 -ml-5 mt-4" action={create}>
