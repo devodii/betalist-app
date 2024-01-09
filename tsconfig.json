@@ -22,6 +22,7 @@
       "@*": ["./src/*"],
       "@ui/*": ["./src/components/ui/*"],
       "@hooks/*": ["./src/lib/hooks/*"],
+      "@auth/*": ["./src/app/(auth)/_components/*"],
       "@icons": ["./src/components/icons.ts"]
     }
   },

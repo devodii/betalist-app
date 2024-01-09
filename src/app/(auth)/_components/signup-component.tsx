@@ -1,6 +1,6 @@
 'use client'
 
-import { Form } from '@app/(auth)/_components/form'
+import { Form } from '@auth/form'
 import supabase from '@lib/supabase'
 import { signIn } from 'next-auth/react'
 

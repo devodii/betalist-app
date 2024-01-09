@@ -1,6 +1,6 @@
 'use client'
 
-import { Form } from '@app/(auth)/_components/form'
+import { Form } from '@auth/form'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
