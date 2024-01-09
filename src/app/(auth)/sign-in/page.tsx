@@ -8,13 +8,13 @@ interface Props {
   }
 }
 
-export default async function SignInPage({ searchParams: { path } }: Props) {
+export default async function SignInPage({ searchParams }: Props) {
   const user = await getServerSession()
 
   if (user?.user) {
     redirect(`/dashboard`)
   }
 
-  return <SignInComponent path={path} />
+  return <SignInComponent path={searchParams.path} />
 }
 

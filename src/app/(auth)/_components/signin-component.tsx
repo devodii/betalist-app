@@ -9,7 +9,7 @@ interface Props {
   path?: string
 }
 
-export const SignInComponent = ({ path }: Props) => {
+export const SignInComponent = (props: Props) => {
   const { refresh } = useRouter()
 
   async function handleSubmit(formdata: FormData) {
@@ -20,7 +20,9 @@ export const SignInComponent = ({ path }: Props) => {
       email,
       password,
       redirect: false,
-      callbackUrl: path ? `/dashboard/create?url=${path}` : '/dashboard'
+      callbackUrl: props.path
+        ? `/dashboard/create?url=${props.path}`
+        : '/dashboard'
     })
     if (response?.status === 401) {
       alert('Account not found, try sign up instead :)')
