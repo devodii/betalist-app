@@ -1,4 +1,4 @@
-import { SignUpComponent } from '@app/(auth)/_components/signup-component'
+import { SignUpComponent } from '@auth/signup-component'
 import { getServerSession } from 'next-auth/next'
 import { redirect } from 'next/navigation'
 
