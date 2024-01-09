@@ -8,6 +8,9 @@ dependencies:
   '@builder.io/react-hydration-overlay':
     specifier: ^0.0.6
     version: 0.0.6(react-dom@18.2.0)(react@18.2.0)(webpack@5.89.0)
+  '@lemonsqueezy/lemonsqueezy.js':
+    specifier: ^1.2.5
+    version: 1.2.5
   '@phosphor-icons/react':
     specifier: ^2.0.15
     version: 2.0.15(react-dom@18.2.0)(react@18.2.0)
@@ -353,6 +356,10 @@ packages:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.1
       '@jridgewell/sourcemap-codec': 1.4.15
+
+  /@lemonsqueezy/lemonsqueezy.js@1.2.5:
+    resolution: {integrity: sha512-T2XjKf5wgJcnZyY9ohZWUmaetzf2qGg0WfSbTsA1Mc9ubU/1w9T4BqsZagyyaXZjZ09SyLjvunzzivX5ppuohA==}
+    dev: false
 
   /@next/env@14.0.3:
     resolution: {integrity: sha512-7xRqh9nMvP5xrW4/+L0jgRRX+HoNRGnfJpD+5Wq6/13j3dsdzxO3BCXn7D3hMqsDb+vjZnJq+vI7+EtgrYZTeA==}

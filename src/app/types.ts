@@ -4,6 +4,7 @@ export interface Account {
   id: UUID
   email: string
   created_at: Date
+  is_pro?: boolean // defaults to false
 }
 
 export interface IVerifyUser {
