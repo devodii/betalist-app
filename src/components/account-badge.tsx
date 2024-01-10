@@ -1,6 +1,7 @@
 import { Crown } from '@icons'
 import * as React from 'react'
 import { Badge } from './ui/badge'
+import { GetLifeTimeAccess } from './get-lifetime-access'
 
 interface Props {
   isPro: boolean
@@ -17,7 +18,9 @@ export function AccountBadge(props: Props) {
           </>
         ) : (
           <>
-            <span>Upgrade</span>
+            <GetLifeTimeAccess>
+              <span>Upgrade</span>
+            </GetLifeTimeAccess>
           </>
         )}
       </div>

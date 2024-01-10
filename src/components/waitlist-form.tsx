@@ -3,13 +3,7 @@
 import { insertIntoTable } from '@action'
 import { WaitList } from '@app/types'
 import { Submit } from '@components/submit-button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle
-} from '@ui/card'
+import { Card, CardContent, CardHeader, CardTitle } from '@ui/card'
 import { Input } from '@ui/input'
 import { Label } from '@ui/label'
 import { useRouter } from 'next/navigation'
@@ -32,6 +26,8 @@ export function WaitListForm(props: Props) {
     await insertIntoTable(email, props.waitlistInfo?.name)
     setTimeout(() => push(redirect_url, 2000))
   }
+
+  const isPro = true
 
   return (
     <div className="w-full flex flex-col gap-4 items-center justify-center">
@@ -59,7 +55,7 @@ export function WaitListForm(props: Props) {
         </CardHeader>
       </Card>
 
-      <Spoiler />
+      {!isPro && <Spoiler />}
     </div>
   )
 }
