@@ -2,8 +2,6 @@ import { getUserWaitlists } from '@action'
 import { WaitlistCard } from '@components/waitlist-card'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
-import { getLifetimeStatus } from './action'
-import { Badge } from '@ui/badge'
 
 export default async function DashboardPage() {
   const session = await getServerSession()
@@ -14,7 +12,6 @@ export default async function DashboardPage() {
   }
 
   const userlists = await getUserWaitlists(email)
-  const isPro = await getLifetimeStatus(email)
 
   return (
     <div className="flex flex-col gap-4">
@@ -30,10 +27,6 @@ export default async function DashboardPage() {
           </div>
         )}
       </div>
-
-      <Badge className="max-w-max px-2 py-1">
-        {isPro ? 'Lifetime' : 'Upgrade'}
-      </Badge>
     </div>
   )
 }

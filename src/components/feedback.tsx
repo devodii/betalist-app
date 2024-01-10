@@ -2,19 +2,19 @@
 
 import { findId, logError } from '@action'
 import supabase from '@lib/supabase'
-import { Textarea } from '@ui/textarea'
 import * as React from 'react'
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuTrigger
-} from '@ui/dropdown-menu'
 import { useSession } from 'next-auth/react'
 import { Submit } from './submit-button'
-import { Button } from './ui/button'
+import { Toast } from './toast'
+import { Card, CardContent, CardHeader } from './ui/card'
 
-export function Feedback() {
+interface Props {
+  placeholder: string
+  path: string
+}
+
+export function Feedback(props: Props) {
   const session = useSession()
 
   const [submitted, setSubmitted] = React.useState(false)
@@ -23,7 +23,7 @@ export function Feedback() {
     const text = formdata.get('message')
     const userId = await findId(session?.data?.user?.email!)
 
-    // TODO: Add page URL.
+    // todo: add submit with path
     const { error } = await supabase
       .from('feedbacks')
       .insert({ text, sender_id: userId })
@@ -33,37 +33,38 @@ export function Feedback() {
     }
 
     setSubmitted(true)
+
+    setTimeout(() => setSubmitted(false), 300) // triggers a re-render to update the toast component
   }
   return (
-    <div>
-      <DropdownMenu>
-        <DropdownMenuTrigger className="underline underline-offset-2">
-          Feedback
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="p-4 bg-dark-main shadow-xl min-w-[350px] text-white mr-12 flex items-center justify-center">
-          {!submitted ? (
-            <form className="flex flex-col gap-2 w-full" action={onInsert}>
-              <Textarea
+    <>
+      <div>
+        <Card className="border-grayish text-white bg-inherit min-h-[200px]">
+          <CardHeader className="text-2xl leading-6 font-semibold text-center">
+            Feedback
+          </CardHeader>
+          <CardContent>
+            <form
+              className="flex flex-col gap-2 w-full px-6 py-3"
+              action={onInsert}
+            >
+              <textarea
                 name="message"
-                className="bg-inherit border border-[#f5BDIA]"
-                placeholder="Ideas on how to improve this page."
+                className="rounded-md bg-inherit border border-grayish  outline-none px-4 py-2"
+                placeholder={props.placeholder}
                 required
                 rows={7}
               />
-
               <Submit text="Send feedback" />
             </form>
-          ) : (
-            <div className="flex flex-col gap-2">
-              <span>Thank you for your feedback!</span>
-              <Button onClick={() => setSubmitted(false)} variant={'secondary'}>
-                Send another one
-              </Button>
-            </div>
-          )}
-        </DropdownMenuContent>
-      </DropdownMenu>
-    </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      {submitted && (
+        <Toast description="Your request has been sent" title="Thank you" />
+      )}
+    </>
   )
 }
 

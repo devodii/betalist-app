@@ -11,7 +11,6 @@ interface Props {
 export function CreateWaitlistError(props: Props) {
   const { toast } = useToast()
 
-  console.log('rendered')
   React.useEffect(() => {
     if (props.description) {
       toast({

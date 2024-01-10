@@ -5,14 +5,15 @@ import {
   removeFromGeneralWaitlist
 } from '@action'
 import { DeleteDialog } from '@components/delete-waitlist'
+import { Feedback } from '@components/feedback'
 import { WaitersList } from '@components/waiters'
+import { __rootDomain__ } from '@lib/constants'
 import supabase from '@lib/supabase'
 import { undoFormatUrl } from '@lib/utils'
 import { getServerSession } from 'next-auth'
 import { unstable_noStore as noStore } from 'next/cache'
 import { notFound, redirect } from 'next/navigation'
 import { DeleteDialogContainer, LiveWaitlistInfo } from './client'
-import { __rootDomain__ } from '@lib/constants'
 
 export const revalidate = 0
 
@@ -92,6 +93,13 @@ export default async function AnalyticsPage({ searchParams }: Props) {
           </section>
         </>
       )}
+
+      <aside className="hidden md:block fixed bottom-4 right-4 w-full max-w-md">
+        <Feedback
+          placeholder="What other data would you like to see?"
+          path="/dashboard"
+        />
+      </aside>
     </main>
   )
 }

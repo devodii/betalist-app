@@ -79,16 +79,15 @@ export async function createWaitlist(
 ): Promise<CreateWaitListReturn> {
   const user_id = await findId(email!)
   const table_name = `${email}_${name}`
-
+  
   let error_occured = false
   let error_msg = ''
 
   const existing_table = await findTable(table_name)
 
   if (existing_table?.length || existing_table) {
-    console.log({ existing_table })
     error_occured = true
-    error_msg = 'Name in use'
+    error_msg = 'Name is already in use'
     return { error_occured, error_msg }
   }
 
