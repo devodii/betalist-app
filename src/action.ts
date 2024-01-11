@@ -1,6 +1,7 @@
 'use server'
 
 import { greet } from '@app/(auth)/action'
+import { getLifetimeStatus } from '@app/dashboard/action'
 import { IVerifyUser, WaitList } from '@app/types'
 import supabase from '@lib/supabase'
 import { PostgrestError } from '@supabase/supabase-js'
@@ -68,6 +69,17 @@ export async function deleteTable(name: string) {
   return { data, error }
 }
 
+export async function waitlistCount(user_id: string) {
+  const waitlists = await supabase
+    .from('waitlists')
+    .select('*')
+    .eq('user_id', user_id)
+
+  console.log(waitlists.data?.length)
+
+  return waitlists.data?.length as number
+}
+
 type CreateWaitListReturn = {
   error_msg: string
   error_occured: boolean
@@ -77,11 +89,32 @@ export async function createWaitlist(
   email: string,
   name: string
 ): Promise<CreateWaitListReturn> {
+  const isProUser = await getLifetimeStatus(email)
+
   const user_id = await findId(email!)
   const table_name = `${email}_${name}`
-  
+
   let error_occured = false
   let error_msg = ''
+
+  if (!isProUser) {
+    return {
+      error_occured: true,
+      error_msg: 'You must be a purchase lifetime deal to create waitlists.'
+    }
+  }
+
+  // Check if the user is a pro user and already has 2 or more waitlists
+  const totalWaitlistCreated = await waitlistCount(user_id)
+  console.log({ totalWaitlistCreated })
+
+  if (totalWaitlistCreated >= 2) {
+    console.log('trial exceeded!')
+    return {
+      error_occured: true,
+      error_msg: 'You are restricted to 2 waitlists, upgrade to pro.'
+    }
+  }
 
   const existing_table = await findTable(table_name)
 
