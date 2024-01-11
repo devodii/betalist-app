@@ -1,4 +1,4 @@
-import { getUserWaitlists } from '@action'
+import { getUserWaitlists, waitlistCount } from '@action'
 import { WaitlistCard } from '@components/waitlist-card'
 import { getServerSession } from 'next-auth'
 import { redirect } from 'next/navigation'
@@ -12,9 +12,10 @@ export default async function DashboardPage() {
   }
 
   const userlists = await getUserWaitlists(email)
+  // const count = await waitlistCount('9895ec39-b4d0-42bb-b7b9-419130300f9b')
 
   return (
-    <div className="bg-red-500 flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
         {userlists?.length > 0 ? (
           userlists.map(list => (
@@ -27,6 +28,8 @@ export default async function DashboardPage() {
           </div>
         )}
       </div>
+
+      {/* {count} */}
     </div>
   )
 }
