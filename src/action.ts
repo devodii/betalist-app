@@ -1,6 +1,5 @@
 'use server'
 
-import { greet } from '@app/(auth)/action'
 import { getLifetimeStatus } from '@app/dashboard/action'
 import { IVerifyUser, WaitList } from '@app/types'
 import supabase from '@lib/supabase'
@@ -33,10 +32,6 @@ export async function verifyUser(
     .from('users')
     .select('*')
     .eq('email', email)
-
-  if (user) {
-    await greet()
-  }
 
   if (error) {
     console.error('Error fetching user:', error)

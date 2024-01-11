@@ -24,6 +24,12 @@ export function SignUpComponent(props: Props) {
           : '/dashboard'
       })
     }
+
+    try {
+      await fetch('/api/email/welcome', { method: 'POST' })
+    } catch (error: any) {
+      console.error('Error sending email', error.message)
+    }
   }
   return <Form action={handleSubmit} type="sign-up" />
 }
