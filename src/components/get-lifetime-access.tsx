@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Dialog,
   DialogContent,
@@ -6,15 +8,24 @@ import {
   DialogHeader,
   DialogTrigger
 } from '@/components/ui/dialog'
-import { redirectToCheckout } from '@app/dashboard/action'
+import { ls } from '@lib/lemon-squeezy'
 import * as React from 'react'
 
 interface Props {
   children?: React.ReactNode
 }
 
-export async function GetLifeTimeAccess(props: Props) {
-  const url = await redirectToCheckout()
+export function GetLifeTimeAccess(props: Props) {
+  const [url, setUrl] = React.useState<string | null>(null)
+
+  React.useEffect(() => {
+    async function redirectToCheckout() {
+      const products = await ls.getProducts()
+      const url = products.data[0].attributes.buy_now_url
+      setUrl(url)
+    }
+    redirectToCheckout()
+  }, [])
 
   return (
     <Dialog>
@@ -29,9 +40,11 @@ export async function GetLifeTimeAccess(props: Props) {
         </DialogDescription>
 
         <DialogFooter>
-          <a href={url} target="_blank">
-            Purchase
-          </a>
+          {url && (
+            <a href={url} target="_blank">
+              Purchase
+            </a>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>

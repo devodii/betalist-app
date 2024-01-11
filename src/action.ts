@@ -69,7 +69,9 @@ export async function deleteTable(name: string) {
   return { data, error }
 }
 
-export async function waitlistCount(user_id: string) {
+export async function waitlistCount(email: string) {
+  const user_id = await findId(email)
+
   const waitlists = await supabase
     .from('waitlists')
     .select('*')
@@ -97,24 +99,24 @@ export async function createWaitlist(
   let error_occured = false
   let error_msg = ''
 
-  if (!isProUser) {
-    return {
-      error_occured: true,
-      error_msg: 'You must be a purchase lifetime deal to create waitlists.'
-    }
-  }
+  // if (!isProUser) {
+  //   return {
+  //     error_occured: true,
+  //     error_msg: 'You must be a purchase lifetime deal to create waitlists.'
+  //   }
+  // }
 
   // Check if the user is a pro user and already has 2 or more waitlists
-  const totalWaitlistCreated = await waitlistCount(user_id)
-  console.log({ totalWaitlistCreated })
+  // const totalWaitlistCreated = await waitlistCount(user_id)
+  // console.log({ totalWaitlistCreated })
 
-  if (totalWaitlistCreated >= 2) {
-    console.log('trial exceeded!')
-    return {
-      error_occured: true,
-      error_msg: 'You are restricted to 2 waitlists, upgrade to pro.'
-    }
-  }
+  // if (totalWaitlistCreated >= 2) {
+  //   console.log('trial exceeded!')
+  //   return {
+  //     error_occured: true,
+  //     error_msg: 'You are restricted to 2 waitlists, upgrade to pro.'
+  //   }
+  // }
 
   const existing_table = await findTable(table_name)
 

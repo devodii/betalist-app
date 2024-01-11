@@ -14,6 +14,8 @@ import { Switch } from '@ui/switch'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
 import { CreateWaitlistError } from './create-waitlist-error'
+import { GetLifeTimeAccess } from './get-lifetime-access'
+import { Button } from './ui/button'
 
 type Fields = {
   email: boolean
@@ -25,6 +27,7 @@ type Error = {
 
 interface Props {
   action: (formdata: FormData) => Promise<string | null | void>
+  onlyIf: boolean
 }
 
 export function CreateWaitListForm(props: Props) {
@@ -42,7 +45,7 @@ export function CreateWaitListForm(props: Props) {
   const path = searchParams.get('url')
 
   const pathname = usePathname()
-  const { replace, push } = useRouter()
+  const { replace } = useRouter()
 
   function handleUpdate(term: string) {
     term ? params.set('url', term) : params.delete('url')
@@ -89,7 +92,6 @@ export function CreateWaitListForm(props: Props) {
                 onChange={e => handleUpdate(e.target.value)}
                 placeholder="Product name..."
                 name="name"
-                required
               />
             </div>
 
@@ -109,7 +111,19 @@ export function CreateWaitListForm(props: Props) {
               </div>
             </div>
 
-            <Submit text="Create" />
+            {props.onlyIf ? (
+              <Submit text="Create" />
+            ) : (
+              <GetLifeTimeAccess>
+                <Button
+                  variant="secondary"
+                  className="w-full flex items-center gap-1 p-4"
+                  type="submit"
+                >
+                  Create
+                </Button>
+              </GetLifeTimeAccess>
+            )}
           </form>
 
           <CreateWaitlistError
