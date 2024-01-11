@@ -114,7 +114,7 @@ export function CreateWaitListForm(props: Props) {
             {props.onlyIf ? (
               <Submit text="Create" />
             ) : (
-              <GetLifeTimeAccess>
+              <GetLifeTimeAccess reason="trial exceeded">
                 <Button
                   variant="secondary"
                   className="w-full flex items-center gap-1 p-4"

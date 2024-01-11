@@ -18,7 +18,7 @@ export function AccountBadge(props: Props) {
           </>
         ) : (
           <>
-            <GetLifeTimeAccess>
+            <GetLifeTimeAccess reason="plan_upgrade">
               <span>Upgrade</span>
             </GetLifeTimeAccess>
           </>
