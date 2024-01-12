@@ -111,19 +111,19 @@ export function CreateWaitListForm(props: Props) {
               </div>
             </div>
 
-            {props.onlyIf ? (
-              <Submit text="Create" />
-            ) : (
-              <GetLifeTimeAccess reason="trial exceeded">
-                <Button
-                  variant="secondary"
-                  className="w-full flex items-center gap-1 p-4"
-                >
-                  Create
-                </Button>
-              </GetLifeTimeAccess>
-            )}
+            {props.onlyIf && <Submit text="Create" />}
           </form>
+
+          {!props.onlyIf && (
+            <GetLifeTimeAccess reason="trial exceeded">
+              <Button
+                variant="secondary"
+                className="w-full flex items-center gap-1 p-4"
+              >
+                Create
+              </Button>
+            </GetLifeTimeAccess>
+          )}
 
           <CreateWaitlistError
             description={error.message}
@@ -134,4 +134,5 @@ export function CreateWaitListForm(props: Props) {
     </Card>
   )
 }
+
 
