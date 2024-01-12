@@ -5,7 +5,7 @@ import { NextResponse } from 'next/server'
 
 const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY)
 
-export async function welcome() {
+export async function POST() {
   try {
     const { data, error } = await resend.emails.send({
       from: 'Betalist <emmanuelodii29@gmail.com>',
@@ -23,6 +23,4 @@ export async function welcome() {
     return NextResponse.json({ success: false, message: error.message })
   }
 }
-
-export { welcome as POST }
 
