@@ -118,7 +118,6 @@ export function CreateWaitListForm(props: Props) {
                 <Button
                   variant="secondary"
                   className="w-full flex items-center gap-1 p-4"
-                  type="submit"
                 >
                   Create
                 </Button>
