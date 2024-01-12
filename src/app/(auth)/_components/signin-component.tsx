@@ -24,6 +24,7 @@ export const SignInComponent = (props: Props) => {
         ? `/dashboard/create?url=${props.path}`
         : '/dashboard'
     })
+    
     if (response?.status === 401) {
       alert('Account not found, try sign up instead :)')
     }
@@ -31,15 +32,20 @@ export const SignInComponent = (props: Props) => {
     refresh()
   }
 
+  async function logIn() {
+    await signIn('google')
+  }
   return (
-    <Form action={handleSubmit} type="sign-in">
-      <p className="flex items-center justify-center gap-1">
-        <span>don&apos;t have an users yet?</span>
-        <Link href={'/sign-up'} className="underline underline-offset-2">
-          signup
-        </Link>
-      </p>
-    </Form>
+    // <Form action={handleSubmit} type="sign-in">
+    //   <p className="flex items-center justify-center gap-1">
+    //     <span>don&apos;t have an users yet?</span>
+    //     <Link href={'/sign-up'} className="underline underline-offset-2">
+    //       signup
+    //     </Link>
+    //   </p>
+    // </Form>
+
+    <button onClick={logIn}>Sign in with google</button>
   )
 }
 

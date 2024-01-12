@@ -27,6 +27,8 @@ export default async function DashboardPage() {
           </div>
         )}
       </div>
+
+      {email}
     </div>
   )
 }
