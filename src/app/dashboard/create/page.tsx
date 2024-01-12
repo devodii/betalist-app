@@ -1,9 +1,8 @@
-import { createWaitlist, waitlistCount } from '@action'
+import { createWaitlist } from '@action'
 import { CreateWaitListForm } from '@components/create-waitlist'
 import { getServerSession } from 'next-auth'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { getLifetimeStatus } from '../action'
 
 interface Props {
   searchParams: {
@@ -14,9 +13,6 @@ interface Props {
 export default async function CreatePage({ searchParams }: Props) {
   const session = await getServerSession()
   const email = session?.user?.email!
-
-  const waitlists = await waitlistCount(email)
-  const isPro = await getLifetimeStatus(email)
 
   async function create(formdata: FormData) {
     'use server'
@@ -41,9 +37,6 @@ export default async function CreatePage({ searchParams }: Props) {
     return error_message ?? null
   }
 
-  // ability to create 2 waitlists for free (starts count from 0)
-  const isAllowed: boolean = isPro || (!isPro && waitlists <= 1)
-
-  return <CreateWaitListForm action={create} onlyIf={isAllowed} />
+  return <CreateWaitListForm action={create} />
 }
 

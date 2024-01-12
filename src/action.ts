@@ -72,8 +72,6 @@ export async function waitlistCount(email: string) {
     .select('*')
     .eq('user_id', user_id)
 
-  console.log(waitlists.data?.length)
-
   return waitlists.data?.length as number
 }
 
@@ -86,6 +84,8 @@ export async function createWaitlist(
   email: string,
   name: string
 ): Promise<CreateWaitListReturn> {
+  const user_waitlists = await waitlistCount(email)
+  console.log({ user_waitlists })
   const isProUser = await getLifetimeStatus(email)
 
   const user_id = await findId(email!)
@@ -94,24 +94,14 @@ export async function createWaitlist(
   let error_occured = false
   let error_msg = ''
 
-  // if (!isProUser) {
-  //   return {
-  //     error_occured: true,
-  //     error_msg: 'You must be a purchase lifetime deal to create waitlists.'
-  //   }
-  // }
+  const isAllowed = isProUser || (!isProUser && user_waitlists <= 1)
 
-  // Check if the user is a pro user and already has 2 or more waitlists
-  // const totalWaitlistCreated = await waitlistCount(user_id)
-  // console.log({ totalWaitlistCreated })
-
-  // if (totalWaitlistCreated >= 2) {
-  //   console.log('trial exceeded!')
-  //   return {
-  //     error_occured: true,
-  //     error_msg: 'You are restricted to 2 waitlists, upgrade to pro.'
-  //   }
-  // }
+  if (!isAllowed) {
+    return {
+      error_occured: true,
+      error_msg: 'You must purchase the lifetime deal to create more waitlists.'
+    }
+  }
 
   const existing_table = await findTable(table_name)
 

@@ -27,7 +27,6 @@ type Error = {
 
 interface Props {
   action: (formdata: FormData) => Promise<string | null | void>
-  onlyIf: boolean
 }
 
 export function CreateWaitListForm(props: Props) {
@@ -111,20 +110,18 @@ export function CreateWaitListForm(props: Props) {
               </div>
             </div>
 
-            {props.onlyIf && <Submit text="Create" />}
+            <Submit text="Create" />
           </form>
 
-          {!props.onlyIf && (
-            <GetLifeTimeAccess reason="trial exceeded">
-              <Button
-                variant="secondary"
-                className="w-full flex items-center gap-1 p-4"
-              >
-                Create
-              </Button>
-            </GetLifeTimeAccess>
-          )}
-
+          {/*  <GetLifeTimeAccess reason="trial exceeded">
+                <Button
+                  variant="secondary"
+                  className="w-full flex items-center gap-1 p-4"
+                >
+                  Create
+                </Button>
+              </GetLifeTimeAccess>
+               */}
           <CreateWaitlistError
             description={error.message}
             render={error.render}
@@ -134,5 +131,4 @@ export function CreateWaitListForm(props: Props) {
     </Card>
   )
 }
-
 
