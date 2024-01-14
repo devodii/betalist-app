@@ -37,15 +37,18 @@ export const BetalistHero = () => {
     <div className="w-full flex flex-col gap-6 items-start">
       <Title />
 
-      <div className="flex-1 max-w-xl mt-20 sm:mt-0">
+      <div className="flex-1 max-w-xl mt-6">
         <span className="opacity-70 lg:text-lg font-normal">
           Start managing your product demand more effectively. Enter the name of
           your product below to create a new waitlist.
         </span>
       </div>
 
-      <form className="w-full max-w-lg mt-8" action={create}>
-        <div className="border border-[#f5BDIA] rounded-md flex items-center gap-2 bg-dark-main w-full py-2 px-4">
+      <form
+        className="w-full max-w-lg mt-0 flex items-center gap-2"
+        action={create}
+      >
+        <div className="border border-[#f5BDIA] rounded-md flex items-center gap-2 bg-dark-main w-full md:w-4/5 py-2 px-4">
           <span className="opacity-70 text-[18px]">betali.st/</span>
           <input
             autoComplete="off"
@@ -56,7 +59,7 @@ export const BetalistHero = () => {
           />
         </div>
 
-        <Submit text="Create" />
+        <Submit text="Create" className="py-4" />
       </form>
     </div>
   )

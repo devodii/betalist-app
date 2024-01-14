@@ -64,15 +64,12 @@ export async function deleteTable(name: string) {
   return { data, error }
 }
 
-export async function waitlistCount(email: string) {
-  const user_id = await findId(email)
+export async function waitlistCount(userId: number) {
+  const { data } = await supabase.from('waitlists').select('*')
 
-  const waitlists = await supabase
-    .from('waitlists')
-    .select('*')
-    .eq('user_id', user_id)
+  const userWaitlists = data?.filter(waitlist => waitlist.user_id === userId)
 
-  return waitlists.data?.length as number
+  return userWaitlists?.length as number
 }
 
 type CreateWaitListReturn = {
@@ -84,17 +81,18 @@ export async function createWaitlist(
   email: string,
   name: string
 ): Promise<CreateWaitListReturn> {
-  const user_waitlists = await waitlistCount(email)
-  console.log({ user_waitlists })
   const isProUser = await getLifetimeStatus(email)
+  const userId = await findId(email!)
 
-  const user_id = await findId(email!)
   const table_name = `${email}_${name}`
+  const userTotalWaitlist = await waitlistCount(userId)
+
+  console.log({ userTotalWaitlist })
 
   let error_occured = false
   let error_msg = ''
 
-  const isAllowed = isProUser || (!isProUser && user_waitlists <= 1)
+  const isAllowed = isProUser || (!isProUser && userTotalWaitlist <= 1)
 
   if (!isAllowed) {
     return {
@@ -123,7 +121,7 @@ export async function createWaitlist(
   // creates a new waitlist in the general database
   const { error } = await supabase
     .from('waitlists')
-    .insert({ name, user_id: user_id, table_name })
+    .insert({ name, user_id: userId, table_name })
 
   if (error) await logError(error)
 

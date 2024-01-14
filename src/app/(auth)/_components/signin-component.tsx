@@ -1,6 +1,7 @@
 'use client'
 
 import { Form } from '@auth/form'
+import { Button } from '@components/ui/button'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -45,7 +46,7 @@ export const SignInComponent = (props: Props) => {
           </Link>
         </p>
       </Form>
-      <button onClick={logIn}>Sign in with google</button>
+      {/* <Button onClick={logIn}>Sign in with google</Button> */}
     </>
   )
 }
