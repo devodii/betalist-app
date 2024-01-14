@@ -84,7 +84,7 @@ export function CreateWaitListForm(props: Props) {
         <CardContent>
           <form className="flex flex-col gap-6" action={mainAction}>
             <div className="flex flex-col gap-2">
-              <Label className="text-white lg:text-lg">Name | URL</Label>
+              <Label className="text-white lg:text-lg">Name</Label>
               <Input
                 className="flex-1 bg-dark-main text-white text-[20px] font-medium"
                 defaultValue={path!}
