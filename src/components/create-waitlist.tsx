@@ -14,8 +14,6 @@ import { Switch } from '@ui/switch'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
 import { CreateWaitlistError } from './create-waitlist-error'
-import { GetLifeTimeAccess } from './get-lifetime-access'
-import { Button } from './ui/button'
 
 type Fields = {
   email: boolean

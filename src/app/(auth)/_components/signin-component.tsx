@@ -40,7 +40,7 @@ export const SignInComponent = (props: Props) => {
     <>
       <Form action={handleSubmit} type="sign-in">
         <p className="flex items-center justify-center gap-1">
-          <span>don&apos;t have an users yet?</span>
+          <span>don&apos;t have an account yet?</span>
           <Link href={'/sign-up'} className="underline underline-offset-2">
             signup
           </Link>
