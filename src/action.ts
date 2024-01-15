@@ -4,6 +4,7 @@ import { getLifetimeStatus } from '@app/dashboard/action'
 import { IVerifyUser, WaitList } from '@app/types'
 import supabase from '@lib/supabase'
 import { PostgrestError } from '@supabase/supabase-js'
+import bcrypt from 'bcrypt'
 
 // TODO: Extend the parameters
 type Error = Parameters<(error: PostgrestError, msg?: string) => void>
@@ -37,9 +38,11 @@ export async function verifyUser(
     console.error('Error fetching user:', error)
   }
 
+  const isPasswordCorrect = await bcrypt.compare(password, user![0].password)
+
   return !user
     ? { status: false, message: 'user not found', user: null }
-    : user[0].password === password
+    : isPasswordCorrect
       ? { message: '', status: true, user: user[0] }
       : { status: false, message: 'password is incorrect', user: null }
 }
@@ -87,12 +90,10 @@ export async function createWaitlist(
   const table_name = `${email}_${name}`
   const userTotalWaitlist = await waitlistCount(userId)
 
-  console.log({ userTotalWaitlist })
-
   let error_occured = false
   let error_msg = ''
 
-  const isAllowed = isProUser || (!isProUser && userTotalWaitlist <= 1)
+  const isAllowed = !isProUser && userTotalWaitlist <= 1
 
   if (!isAllowed) {
     return {

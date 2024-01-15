@@ -1,7 +1,6 @@
 'use client'
 
 import { Form } from '@auth/form'
-import { Button } from '@components/ui/button'
 import { signIn } from 'next-auth/react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -25,7 +24,7 @@ export const SignInComponent = (props: Props) => {
         ? `/dashboard/create?url=${props.path}`
         : '/dashboard'
     })
-    
+
     if (response?.status === 401) {
       alert('Account not found, try sign up instead :)')
     }
@@ -33,9 +32,6 @@ export const SignInComponent = (props: Props) => {
     refresh()
   }
 
-  async function logIn() {
-    await signIn('google')
-  }
   return (
     <>
       <Form action={handleSubmit} type="sign-in">
